@@ -32,6 +32,27 @@ QMK files for BigKNOBv2 macropad controller.
 
 ### Modified
 
+ * Encoder
+   * Press =
+   * Clockwise Rotation = 
+   * Counter-Clockwise Rotation = 
+ * Button 1:
+   * Layer 1 = 
+   * Layer 2 = 
+   * Layer 3 = 
+ * Button 2:
+   * Layer 1 = 
+   * Layer 2 = 
+   * Layer 3 = 
+ * Button 3:
+   * Layer 1 = 
+   * Layer 2 = 
+   * Layer 3 = 
+ * Button 4:
+   * Layer 1 = 
+   * Layer 2 = 
+   * Layer 3 = 
+
 ## Notes
  * My BigKNOBv2 was custom-made by LeafCutterLabs and ordered through [Etsy](https://www.etsy.com/listing/955302431/bigknob-a-custom-programmable-macropad?ref=shop_home_recs_3&frs=1&crt=1). 
  * My BigKNOBv2 uses the dented encoder, and the keymap was obtimized around it (YMMV). 
