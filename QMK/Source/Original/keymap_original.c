@@ -1,3 +1,6 @@
+// Original code from vendor
+// Rename this file as 'keymap.c' prior to compiling
+
 #include QMK_KEYBOARD_H
 
 #define _MAIN 0
