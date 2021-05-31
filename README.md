@@ -5,7 +5,6 @@ QMK files for BigKNOBv2 macropad controller.
 
 
 
-
 ## Key Maps
 
 ### Modified
@@ -53,6 +52,9 @@ QMK files for BigKNOBv2 macropad controller.
    * Layer 2 = F22
    * Layer 3 = CTRL + F16
 
+## How to install the firmware?
+Follow The QMK Tutorial and insert the desired 'config.h,' 'rules.mk,' and 'keymap.c' files where appropriate prior to building and uploading the firmware. 
+   
 ## Notes
  * My BigKNOBv2 was custom-made by LeafCutterLabs and ordered through [Etsy](https://www.etsy.com/listing/955302431/bigknob-a-custom-programmable-macropad?ref=shop_home_recs_3&frs=1&crt=1). 
  * My BigKNOBv2 uses the dented encoder, and the keymap was obtimized around it (YMMV). 

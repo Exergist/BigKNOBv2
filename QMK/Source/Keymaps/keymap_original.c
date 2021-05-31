@@ -1,4 +1,4 @@
-// Original code from vendor
+// Original source code from vendor (LeafCutterLabs)
 // Rename this file as 'keymap.c' prior to compiling
 
 #include QMK_KEYBOARD_H

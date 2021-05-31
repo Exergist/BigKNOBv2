@@ -1,4 +1,4 @@
-// Original source code with:
+// Original source code from vendor (LeafCutterLabs) with:
 //   • Expanded new line and tab formatting
 //   • Comments
 // Rename this file as 'keymap.c' prior to compiling
