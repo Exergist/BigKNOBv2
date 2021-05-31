@@ -148,7 +148,6 @@ void encoder_update_user(uint8_t index, bool clockwise)
 		{
 			if (layer_buffer > 0)
 			{
-				///tap_code(KC_X); // debug
 				layer_buffer = 0;
 				if (selected_layer < highest_layer_number)
 					selected_layer++;
@@ -158,7 +157,6 @@ void encoder_update_user(uint8_t index, bool clockwise)
 			}
 			else
 			{
-				///tap_code(KC_Y); // debug
 				layer_buffer = 0;
 				if (selected_layer > 0)
 					selected_layer--;
