@@ -53,7 +53,9 @@ QMK files for BigKNOBv2 macropad controller.
    * Layer 3 = CTRL + F16
 
 ## How to install the firmware?
-Follow The QMK Tutorial and insert the desired 'config.h,' 'rules.mk,' and 'keymap.c' files where appropriate prior to building and uploading the firmware. 
+ 1. Rename your desired 'keymap_DESCRIPTION.c' file as 'keymap.c'
+ 2. Go through the The QMK Tutorial
+ 3. Insert the desired 'config.h,' 'rules.mk,' and 'keymap.c' files where appropriate prior to building and uploading the firmware. 
    
 ## Notes
  * My BigKNOBv2 was custom-made by LeafCutterLabs and ordered through [Etsy](https://www.etsy.com/listing/955302431/bigknob-a-custom-programmable-macropad?ref=shop_home_recs_3&frs=1&crt=1). 
