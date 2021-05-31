@@ -11,8 +11,8 @@
 
 // Global variable initialization
 uint8_t selected_layer = 0;
-int layer_buffer = 0; // Counter for encoder input events
-int layer_cycle_threshold = 6; // Number of encoder input events before layer cycle is viable
+int encoder_buffer = 0; // Counter for encoder input events
+int encoder_threshold = 6; // Number of encoder input events before layer may cycle
 
 // Create custom keycodes via enumeration
 enum custom_keycodes
@@ -45,7 +45,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] =
 // Executes every time layer is changed
 layer_state_t layer_state_set_user(layer_state_t state)
 {
-	layer_buffer = 0;
+	encoder_buffer = 0;
 	selected_layer = biton32(state);
 	switch(selected_layer) // Handle various layer levels
 	{
@@ -129,26 +129,25 @@ void encoder_update_user(uint8_t index, bool clockwise)
 {
 	if (index == 0)
 	{
-		// Increment/decrement the layer_buffer
+		// Increment/decrement the encoder_buffer
 		if (clockwise)
 		{
-			if (layer_buffer < 0)
-				layer_buffer = 0;
-			layer_buffer++;
+			if (encoder_buffer < 0)
+				encoder_buffer = 0;
+			encoder_buffer++;
 		}
 		else
 		{
-			if (layer_buffer > 0)
-				layer_buffer = 0;
-			layer_buffer--;
+			if (encoder_buffer > 0)
+				encoder_buffer = 0;
+			encoder_buffer--;
 		}
 		
 		// Cycle layer if appropriate
-		if (abs(layer_buffer) >= layer_cycle_threshold) // Check if layer_buffer grew beyond layer_cycle_threshold
+		if (abs(encoder_buffer) >= encoder_threshold) // Check if encoder_buffer grew beyond encoder_threshold
 		{
-			if (layer_buffer > 0)
+			if (encoder_buffer > 0)
 			{
-				layer_buffer = 0;
 				if (selected_layer < highest_layer_number)
 					selected_layer++;
 				else
@@ -157,7 +156,6 @@ void encoder_update_user(uint8_t index, bool clockwise)
 			}
 			else
 			{
-				layer_buffer = 0;
 				if (selected_layer > 0)
 					selected_layer--;
 				else
