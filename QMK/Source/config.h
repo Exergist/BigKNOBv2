@@ -27,7 +27,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define PRODUCT         bigKNOBv2
 #define DESCRIPTION     5 key with rotary  board
 
-/* key matrix size */
+/* Key matrix size */
 #define MATRIX_ROWS 1
 #define MATRIX_COLS 5
 
@@ -43,16 +43,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
 */
 
-// Srating with closest to USB port 
+// Starting with closest to USB port 
 #define DIRECT_PINS {   \
     { B7, D4, D6, F6, F7} \
 }
-//speed for double tap
+// Speed for double tap
 #define TAPPING_TERM 300
 
 #define UNUSED_PINS
 
-/* rotary encoder 1,2,3 closest to usb port is 0*/
+/* Rotary encoder 1,2,3 closest to usb port is 0*/
 #define ENCODERS_PAD_A { D0}
 #define ENCODERS_PAD_B { D2}
 #define ENCODER_RESOLUTION 2 //default/suggested
@@ -61,6 +61,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define RGB_DI_PIN C7 //D3 - underglow C7 - backlight
 #define RGBLIGHT_ANIMATIONS
 #define RGBLED_NUM 5    // Number of LEDs
+#define RGBLIGHT_SLEEP // RGB lighting will be switched off when the host goes to sleep (Exergist)
 
 #define MUSIC_MASK (keycode != KC_NO)
 #define MIDI_ADVANCED
