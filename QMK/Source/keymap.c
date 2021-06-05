@@ -113,7 +113,7 @@ layer_state_t layer_state_set_user(layer_state_t state)
 // Method run when Tap Dance action finishes
 void dance_cln_finished(qk_tap_dance_state_t *state, void *user_data)
 {
-    if (state->count == 1) // Check if single-tap was received
+	if (state->count == 1) // Check if single-tap was received
 	{
 		int moveLayer = selected_layer;
 		if (moveLayer < highest_layer_number)
@@ -121,7 +121,7 @@ void dance_cln_finished(qk_tap_dance_state_t *state, void *user_data)
 		else
 			moveLayer = 0;
 		layer_move(moveLayer); // Shift to moveLayer
-    }
+	}
 	else
 	{
 		rgblight_toggle(); // Toggle the RGB LEDs
@@ -143,7 +143,7 @@ void dance_cln_finished(qk_tap_dance_state_t *state, void *user_data)
 					break;
 			}
 		}
-    }
+	}
 }
 
 // Tap Dance definitions
