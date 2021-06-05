@@ -62,12 +62,11 @@ QMK files for BigKNOBv2 macropad controller.
    * Layer 2 = Blue
 
 ## How to install the firmware?
- 1. Rename your desired 'keymap_DESCRIPTION.c' file as 'keymap.c' (no quotes).
- 2. Go through [The QMK Tutorial](https://docs.qmk.fm/#/newbs).
- 3. Insert the desired 'config.h,' 'rules.mk,' and 'keymap.c' files where appropriate prior to building and uploading the firmware. 
+ 1. Go through [The QMK Tutorial](https://docs.qmk.fm/#/newbs).
+ 2. Insert the desired 'config.h,' 'rules.mk,' and 'keymap.c' files where appropriate prior to building and uploading the firmware. 
    
 ## Notes
- * My BigKNOBv2 was custom-made by LeafCutterLabs and ordered through [Etsy](https://www.etsy.com/listing/955302431/bigknob-a-custom-programmable-macropad?ref=shop_home_recs_3&frs=1&crt=1). 
+ * My BigKNOBv2 was custom-made and ordered through [Etsy](https://www.etsy.com/listing/955302431/bigknob-a-custom-programmable-macropad?ref=shop_home_recs_3&frs=1&crt=1). 
  * My BigKNOBv2 uses the dented encoder, and the "modified" keymap was optimized around it (YMMV). 
  * BigKNOBv2 has key switches with RGB backlighting (as opposed to RGB underglow for the whole device).
 
