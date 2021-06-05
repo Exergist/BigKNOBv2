@@ -33,7 +33,7 @@ int encoder_threshold = 6; // Number of encoder input events before layer may cy
 // Custom keycode declarations
 enum custom_keycodes
 {
-    CTRLF13 = SAFE_RANGE,
+	CTRLF13 = SAFE_RANGE,
 	CTRLF14,
 	CTRLF15,
 	CTRLF16,
@@ -49,9 +49,9 @@ enum tap_dance
 // Layer declarations
 enum layers
 { 
-    _PRIMARY,
-    _SECONDARY,
-    _TERTIARY
+	_PRIMARY,
+	_SECONDARY,
+	_TERTIARY
 };
 
 //}
@@ -205,7 +205,7 @@ void encoder_update_user(uint8_t index, bool clockwise)
 // Define behavior for custom keycodes and process other keycodes normally
 bool process_record_user(uint16_t keycode, keyrecord_t *record)
 {
-    switch (keycode) // Switch statement for handling triggering keycodes
+	switch (keycode) // Switch statement for handling triggering keycodes
 	{
 		case CTRLF13: // Triggering keycode is the (custom) CTRLF13
 			if (record->event.pressed)  // Check if the triggering action was a physical key "press" (down)
@@ -239,8 +239,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 				// when keycode QMKBEST is released
 			}
 			break;
-    }
-    return true; // Effectively process ALL keycodes "normally"
+	}
+	return true; // Effectively process ALL keycodes "normally"
 };
 
 //}
