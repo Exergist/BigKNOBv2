@@ -6,6 +6,7 @@
 //   • Layer cycling via encoder rotation
 //   • Layer advancing via encoder single-tap
 //   • RGB LED toggle on/off via encoder double-tap
+//   • Restructured layout and code organization
 //   • Expanded new line and tab formatting
 //   • Comments
 // Rename this file as 'keymap.c' prior to compiling
@@ -146,26 +147,9 @@ void dance_cln_finished(qk_tap_dance_state_t *state, void *user_data)
     }
 }
 
-/*// Tap Dance reset method
-void dance_cln_reset(qk_tap_dance_state_t *state, void *user_data)
-{
-    if (state->count == 1)
-	{
-        ///unregister_code16(KC_X);
-    }
-	else
-	{
-        unregister_code(KC_Y);
-		///unregister_code16(RGB_TOG);
-		///unregister_code(RGB_TOG);
-    }
-}*/
-
 // Tap Dance definitions
 qk_tap_dance_action_t tap_dance_actions[] =
 {
-    ///[TD_TEST1] = ACTION_TAP_DANCE_DOUBLE(KC_O, KC_P), // Tap once for O, twice for P
-	///[TD_TEST2] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, dance_cln_finished, NULL),
 	[TD_NextLayer_ToggleLED] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, dance_cln_finished, NULL)
 };
 
