@@ -5,7 +5,7 @@
 // Modified from original source code with:
 //   • Layer cycling via encoder rotation
 //   • Layer advancing via encoder single-tap
-//   • RGB LED toggle via encoder double-tap
+//   • RGB LED toggle on/off via encoder double-tap
 //   • Expanded new line and tab formatting
 //   • Comments
 // Rename this file as 'keymap.c' prior to compiling
