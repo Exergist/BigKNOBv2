@@ -7,28 +7,33 @@ QMK files for BigKNOBv2 macropad controller.
 
 ## Key Maps
 
-### Modified
+### Latest Release (v3.0)
 
  * Encoder
-   * Press = Next Layer
+   * Single-Press = Next Layer
+   * Double-Press = Toggle RGB LEDs On/Off
    * Clockwise Rotation = Next Layer
    * Counter-Clockwise Rotation = Previous Layer
  * Button 1:
-   * Layer 1 = F14
-   * Layer 2 = F19
-   * Layer 3 = CTRL + F13
+   * Layer 0 = F14
+   * Layer 1 = F19
+   * Layer 2 = CTRL + F13
  * Button 2:
-   * Layer 1 = F15
-   * Layer 2 = F20
-   * Layer 3 = CTRL + F14
+   * Layer 0 = F15
+   * Layer 1 = F20
+   * Layer 2 = CTRL + F14
  * Button 3:
-   * Layer 1 = F16
-   * Layer 2 = F21
-   * Layer 3 = CTRL + F15
+   * Layer 0 = F16
+   * Layer 1 = F21
+   * Layer 2 = CTRL + F15
  * Button 4:
-   * Layer 1 = F17
-   * Layer 2 = F22
-   * Layer 3 = CTRL + F16
+   * Layer 0 = F17
+   * Layer 1 = F22
+   * Layer 2 = CTRL + F16
+ * RGB LED Colors:
+   * Layer 0 = Red
+   * Layer 1 = Green
+   * Layer 2 = Blue
 
 ### Original
  * Encoder
@@ -36,21 +41,25 @@ QMK files for BigKNOBv2 macropad controller.
    * Clockwise Rotation = Volume Up
    * Counter-Clockwise Rotation = Volume Down
  * Button 1:
-   * Layer 1 = F14
-   * Layer 2 = F19
-   * Layer 3 = CTRL + F13
+   * Layer 0 = F14
+   * Layer 1 = F19
+   * Layer 2 = CTRL + F13
  * Button 2:
-   * Layer 1 = F15
-   * Layer 2 = F20
-   * Layer 3 = CTRL + F14
+   * Layer 0 = F15
+   * Layer 1 = F20
+   * Layer 2 = CTRL + F14
  * Button 3:
-   * Layer 1 = F16
-   * Layer 2 = F21
-   * Layer 3 = CTRL + F15
+   * Layer 0 = F16
+   * Layer 1 = F21
+   * Layer 2 = CTRL + F15
  * Button 4:
-   * Layer 1 = F17
-   * Layer 2 = F22
-   * Layer 3 = CTRL + F16
+   * Layer 0 = F17
+   * Layer 1 = F22
+   * Layer 2 = CTRL + F16
+ * RGB LED Colors:
+   * Layer 0 = Red
+   * Layer 1 = Green
+   * Layer 2 = Blue
 
 ## How to install the firmware?
  1. Rename your desired 'keymap_DESCRIPTION.c' file as 'keymap.c' (no quotes).
