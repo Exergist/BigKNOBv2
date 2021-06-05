@@ -16,7 +16,6 @@
 
 #include QMK_KEYBOARD_H
 
-#define _MAIN 0
 #define RBG_VAL 120
 
 //}
@@ -47,6 +46,14 @@ enum tap_dance
 	TD_NextLayer_ToggleLED
 };
 
+// Layer declarations
+enum layers
+{ 
+    _PRIMARY,
+    _SECONDARY,
+    _TERTIARY
+};
+
 //}
 
 //{ KEYMAP
@@ -55,18 +62,15 @@ enum tap_dance
 // Button closest to usb is first
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] =
 {
-	[_MAIN] = LAYOUT // Layer 0
+	[_PRIMARY] = LAYOUT // Layer 0
 	(
-		///TO(1), KC_F14, KC_F15, KC_F16, KC_F17 // Activate Layer 1, F14, F15, F16, F17
-		///RGB_TOG, KC_F14, KC_F15, KC_F16, KC_F17 // Activate Layer 1, F14, F15, F16, F17 /// works to toggle LEDs
-		///TD(TD_TEST1), KC_F14, KC_F15, KC_F16, KC_F17 // [Single-tap = O, Double-tap = P], F14, F15, F16, F17
 		TD(TD_NextLayer_ToggleLED), KC_F14, KC_F15, KC_F16, KC_F17 // [Single-tap = Activate Next Layer, Double-tap = toggle RGB LEDs], F14, F15, F16, F17
 	),
-	[1] = LAYOUT // Layer 1
+	[_SECONDARY] = LAYOUT // Layer 1
 	(
 		TD(TD_NextLayer_ToggleLED), KC_F19, KC_F20, KC_F21, KC_F22 // [Single-tap = Activate Next Layer, Double-tap = toggle RGB LEDs], F19, F20, F21, F22
 	),
-	[2] = LAYOUT // Layer 2
+	[_TERTIARY] = LAYOUT // Layer 2
 	(
 		TD(TD_NextLayer_ToggleLED), CTRLF13, CTRLF14, CTRLF15, CTRLF16 // [Single-tap = Activate Next Layer, Double-tap = toggle RGB LEDs], CTRLF13, CTRLF14, CTRLF15, CTRLF16
 	),
