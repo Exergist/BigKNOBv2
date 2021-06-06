@@ -1,9 +1,9 @@
+![image](https://user-images.githubusercontent.com/31357974/120911848-11029f80-c650-11eb-8896-d142378cb411.png)
+
 # qmk.BigKNOBv2
 
 ## What is this?
-QMK files for BigKNOBv2 macropad controller. 
-
-
+QMK files for BigKNOBv2 macropad controller with RGB key switches.
 
 ## Key Maps
 
@@ -67,8 +67,7 @@ QMK files for BigKNOBv2 macropad controller.
    
 ## Notes
  * My BigKNOBv2 was custom-made and ordered through [Etsy](https://www.etsy.com/shop/LeafCutterLabs?ref=simple-shop-header-name&listing_id=955302431). 
- * My BigKNOBv2 uses the dented encoder, and the "modified" keymap was optimized around it (YMMV). 
- * BigKNOBv2 has key switches with RGB backlighting (as opposed to RGB underglow for the whole device).
+ * The "modified" keymap was optimized for use with the BigKNOBv2 dented encoder. 
 
 ## Acknowledgements
 
