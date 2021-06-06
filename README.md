@@ -7,11 +7,11 @@ QMK files for BigKNOBv2 macropad controller.
 
 ## Key Maps
 
-### Latest Release (v3.0)
+### Latest Release (v4.0)
 
  * Encoder
    * Single-Press = Next Layer
-   * Double-Press = Toggle RGB LEDs On/Off
+   * Press-Hold-Release = Toggle RGB LEDs On/Off
    * Clockwise Rotation = Next Layer
    * Counter-Clockwise Rotation = Previous Layer
  * Button 1:
