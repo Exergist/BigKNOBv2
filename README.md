@@ -72,5 +72,5 @@ QMK files for BigKNOBv2 macropad controller.
 
 ## Acknowledgements
 
-* BigKNOBv2 hardware design and QMK source files are by [LeafCutterLabs](https://github.com/LeafCutterLabs).
+* BigKNOBv2 hardware design and QMK source files are by Craig Gardner from [LeafCutterLabs](https://github.com/LeafCutterLabs).
 * [QMK](https://qmk.fm/) is developed and maintained by Jack Humbert of OLKB with contributions from the community.
