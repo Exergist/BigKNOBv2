@@ -5,7 +5,7 @@
 // Modified from original source code with:
 //   • Layer cycling via encoder rotation
 //   • Layer advancing via encoder tap
-//   • RGB LED toggle on/off via encoder press-hold-release
+//   • RGB LEDs toggle on/off via encoder press-hold-release
 //   • Restructured layout and code organization
 //   • Expanded new line and tab formatting
 //   • Comments
