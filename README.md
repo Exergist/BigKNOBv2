@@ -45,4 +45,4 @@ QMK files for BigKNOBv2 macropad controller with RGB key switches.
 
 * BigKNOBv2 hardware design and QMK source files are by Craig Gardner from [LeafCutterLabs](https://github.com/LeafCutterLabs).
 * [QMK](https://qmk.fm/) is developed and maintained by Jack Humbert of OLKB with contributions from the community.
-* filterpaper, drashna, ridingquerty, **MORE** and probably others from the [qmk Discord](https://discord.gg/Uq7gcHh) for their qmk guideance
+* filterpaper, drashna, ridingquerty, **MORE** and probably others from the [qmk Discord](https://discord.gg/Uq7gcHh) for their qmk guideance.
