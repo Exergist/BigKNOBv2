@@ -5,57 +5,29 @@
 ## What is this?
 QMK files for BigKNOBv2 macropad controller with RGB key switches.
 
-## Key Maps
-
-### Latest Release (v4.0)
+## Key Map (v5.0)
 
  * Encoder
    * Single-Press = Next Layer
-   * Press-Hold-Release = Toggle RGB LEDs On/Off
+   * Press-Hold = Toggle RGB LEDs On/Off
    * Clockwise Rotation = Next Layer
    * Counter-Clockwise Rotation = Previous Layer
  * Button 1:
    * Layer 0 = F13
    * Layer 1 = F17
-   * Layer 2 = CTRL + F13
+   * Layer 2 = F21
  * Button 2:
    * Layer 0 = F14
    * Layer 1 = F18
-   * Layer 2 = CTRL + F14
+   * Layer 2 = F22
  * Button 3:
    * Layer 0 = F15
    * Layer 1 = F19
-   * Layer 2 = CTRL + F15
+   * Layer 2 = F23
  * Button 4:
    * Layer 0 = F16
    * Layer 1 = F20
-   * Layer 2 = CTRL + F16
- * RGB LED Colors:
-   * Layer 0 = Red
-   * Layer 1 = Green
-   * Layer 2 = Blue
-
-### Original
- * Encoder
-   * Press = Next Layer
-   * Clockwise Rotation = Volume Up
-   * Counter-Clockwise Rotation = Volume Down
- * Button 1:
-   * Layer 0 = F14
-   * Layer 1 = F19
-   * Layer 2 = CTRL + F13
- * Button 2:
-   * Layer 0 = F15
-   * Layer 1 = F20
-   * Layer 2 = CTRL + F14
- * Button 3:
-   * Layer 0 = F16
-   * Layer 1 = F21
-   * Layer 2 = CTRL + F15
- * Button 4:
-   * Layer 0 = F17
-   * Layer 1 = F22
-   * Layer 2 = CTRL + F16
+   * Layer 2 = F24
  * RGB LED Colors:
    * Layer 0 = Red
    * Layer 1 = Green
