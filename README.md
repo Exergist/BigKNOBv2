@@ -3,7 +3,7 @@
 # qmk.BigKNOBv2
 
 ## What is this?
-QMK files for BigKNOBv2 macropad controller with RGB key switches.
+QMK files for BigKNOBv2 macropad controller with RGB LED key switches.
 
 ## Key Map (v7.0)
 
