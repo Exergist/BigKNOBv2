@@ -6,6 +6,7 @@
 //   • Layer cycling via encoder rotation
 //   • Layer advancing via encoder single-press
 //   • RGB LEDs toggle on/off via encoder press-hold
+//   • Harmonized function key mapping
 //   • Restructured layout and code organization
 //   • Expanded new line and tab formatting
 //   • Comments
