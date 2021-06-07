@@ -48,7 +48,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     { B7, D4, D6, F6, F7} \
 }
 // Speed for double-tap
-#define TAPPING_TERM 300
+#define TAPPING_TERM 250
 
 #define UNUSED_PINS
 
