@@ -78,7 +78,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] =
 	),
 	[_TERTIARY] = LAYOUT // Layer 2
 	(
-		NextLayer_ToggleLED, KC_F21, KC_F22, KC_F23, KC_F24 // [Tap = Activate Next Layer, Press-Hold-Release = Toggle RGB LEDs], CTRLF13, CTRLF14, CTRLF15, CTRLF16
+		NextLayer_ToggleLED, KC_F21, KC_F22, KC_F23, KC_F24 // [Tap = Activate Next Layer, Press-Hold-Release = Toggle RGB LEDs], F21, F22, F23, F24
 		///NextLayer_ToggleLED, CTRLF13, CTRLF14, CTRLF15, CTRLF16 // [Tap = Activate Next Layer, Press-Hold-Release = Toggle RGB LEDs], CTRLF13, CTRLF14, CTRLF15, CTRLF16
 	)
 };
