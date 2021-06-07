@@ -15,20 +15,20 @@ QMK files for BigKNOBv2 macropad controller with RGB key switches.
    * Clockwise Rotation = Next Layer
    * Counter-Clockwise Rotation = Previous Layer
  * Button 1:
-   * Layer 0 = F14
-   * Layer 1 = F19
+   * Layer 0 = F13
+   * Layer 1 = F17
    * Layer 2 = CTRL + F13
  * Button 2:
-   * Layer 0 = F15
-   * Layer 1 = F20
+   * Layer 0 = F14
+   * Layer 1 = F18
    * Layer 2 = CTRL + F14
  * Button 3:
-   * Layer 0 = F16
-   * Layer 1 = F21
+   * Layer 0 = F15
+   * Layer 1 = F19
    * Layer 2 = CTRL + F15
  * Button 4:
-   * Layer 0 = F17
-   * Layer 1 = F22
+   * Layer 0 = F16
+   * Layer 1 = F20
    * Layer 2 = CTRL + F16
  * RGB LED Colors:
    * Layer 0 = Red
