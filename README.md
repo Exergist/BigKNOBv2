@@ -5,12 +5,12 @@
 ## What is this?
 QMK files for BigKNOBv2 macropad controller with RGB key switches.
 
-## Key Map (v6.0)
+## Key Map (v7.0)
 
  * Encoder
    * Single-Tap = Next Layer
-   * Double-Tap = Previous Layer
-   * Press-Hold = Toggle RGB LEDs On/Off
+   * Double-Tap = Toggle RGB LEDs On/Off
+   * Press-Hold = Previous Layer
    * Clockwise Rotation = Next Layer
    * Counter-Clockwise Rotation = Previous Layer
  * Button 1:
@@ -46,4 +46,5 @@ QMK files for BigKNOBv2 macropad controller with RGB key switches.
 
 * BigKNOBv2 hardware design and QMK source files are by Craig Gardner from [LeafCutterLabs](https://github.com/LeafCutterLabs).
 * [QMK](https://qmk.fm/) is developed and maintained by Jack Humbert of OLKB with contributions from the community.
+* Keymap header ASCII art by [patorjk](https://patorjk.com/software/taag/).
 * filterpaper, drashna, ridingquerty, **MORE** and probably others from the [qmk Discord](https://discord.gg/Uq7gcHh) for their qmk guideance.
