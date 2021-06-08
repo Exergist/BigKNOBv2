@@ -41,11 +41,12 @@ Also includes C# application (using [HidLibrary](https://github.com/mikeobrien/H
 
 ## How to install the firmware?
  1. Go through [The QMK Tutorial](https://docs.qmk.fm/#/newbs).
- 2. Insert the desired 'config.h,' 'rules.mk,' and 'keymap.c' files where appropriate prior to building and uploading the firmware. 
+ 2. Insert the desired _config.h_, _rules.mk_, and _keymap.c_ files where appropriate prior to building and uploading the firmware. 
    
 ## Notes
  * My BigKNOBv2 was custom-made and ordered through [Etsy](https://www.etsy.com/shop/LeafCutterLabs?ref=simple-shop-header-name&listing_id=955302431). 
  * The keymap was optimized for use with the BigKNOBv2 dented encoder. 
+ * Additional QMK resources are compiled in the [QMK Syllabus](https://docs.qmk.fm/#/syllabus).
 
 ## Acknowledgements
 
@@ -53,7 +54,7 @@ Also includes C# application (using [HidLibrary](https://github.com/mikeobrien/H
 * [QMK](https://qmk.fm/) is developed and maintained by Jack Humbert of OLKB with contributions from the community.
 * [HidLibrary](https://github.com/mikeobrien/HidLibrary) is developed and maintained by Mike O'Brien and Austin Mullins (and other contributors)
 * Keymap header ASCII art by [patorjk](https://patorjk.com/software/taag/).
-* Many thanks to the following excellent people (and probably others) from the [qmk Discord](https://discord.gg/Uq7gcHh) for their guideance:
+* Many thanks to the following people (and probably others) from the [qmk Discord](https://discord.gg/Uq7gcHh) for their guideance:
   * filterpaper
   * drashna
   * Dasky
