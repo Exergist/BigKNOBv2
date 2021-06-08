@@ -5,6 +5,8 @@
 ## What is this?
 QMK files for BigKNOBv2 macropad controller with RGB LED key switches.
 
+Also includes C# application (using [HidLibrary](https://github.com/mikeobrien/HidLibrary)) for bidirectional communication between BigKNOBv2 and host computer via Raw HID.
+
 ## Key Map (v7.0)
 
  * Encoder
@@ -40,12 +42,13 @@ QMK files for BigKNOBv2 macropad controller with RGB LED key switches.
    
 ## Notes
  * My BigKNOBv2 was custom-made and ordered through [Etsy](https://www.etsy.com/shop/LeafCutterLabs?ref=simple-shop-header-name&listing_id=955302431). 
- * The "modified" keymap was optimized for use with the BigKNOBv2 dented encoder. 
+ * The keymap was optimized for use with the BigKNOBv2 dented encoder. 
 
 ## Acknowledgements
 
 * BigKNOBv2 hardware design and QMK source files are by Craig Gardner from [LeafCutterLabs](https://github.com/LeafCutterLabs).
 * [QMK](https://qmk.fm/) is developed and maintained by Jack Humbert of OLKB with contributions from the community.
+* [HidLibrary](https://github.com/mikeobrien/HidLibrary) is developed and maintained by Mike O'Brien and Austin Mullins (and other contributors)
 * Keymap header ASCII art by [patorjk](https://patorjk.com/software/taag/).
 * Many thanks to the following excellent people (and probably others) from the [qmk Discord](https://discord.gg/Uq7gcHh) for their guideance:
   * filterpaper
