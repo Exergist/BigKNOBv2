@@ -24,7 +24,7 @@ namespace bigKNOB_HID
             int usagePage = 0xFF60;
             int usageID = 0x61;
 
-            BigKnobAction action = BigKnobAction.ChangeLayer; // Action you want QMK to execute
+            BigKnobAction action = BigKnobAction.ChangeLayer; // Action for QMK to execute
             int context = 0; // Context for desired BigKnobAction
 
             HID_Interface.Connect(vendorID, productID, usagePage, usageID); // Connect with target HidDevice
