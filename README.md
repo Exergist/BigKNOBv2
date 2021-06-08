@@ -51,7 +51,7 @@ Also includes C# application (using [HidLibrary](https://github.com/mikeobrien/H
 ## Acknowledgements
 
 * BigKNOBv2 hardware design and original QMK source files are by Craig Gardner from [LeafCutterLabs](https://github.com/LeafCutterLabs).
-* [QMK](https://qmk.fm/) is developed and maintained by Jack Humbert of OLKB with contributions from the community.
+* [QMK](https://qmk.fm/) is developed and maintained by Jack Humbert of OLKB with contributions from the community (and Hasu).
 * [HidLibrary](https://github.com/mikeobrien/HidLibrary) is developed and maintained by Mike O'Brien and Austin Mullins (and other contributors).
 * Keymap header ASCII art by [patorjk](https://patorjk.com/software/taag/).
 * Many thanks to the following people (and probably others) from the [qmk Discord](https://discord.gg/Uq7gcHh) for their guideance:
