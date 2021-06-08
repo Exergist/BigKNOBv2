@@ -2,7 +2,7 @@
 
 # BigKNOBv2
 
-## What is this?
+## What Is This?
 QMK files for BigKNOBv2 macropad controller with RGB LED key switches.
 
 Also includes C# application (using [HidLibrary](https://github.com/mikeobrien/HidLibrary)) for bidirectional communication between BigKNOBv2 and host computer via Raw HID.
@@ -39,7 +39,7 @@ Also includes C# application (using [HidLibrary](https://github.com/mikeobrien/H
 ## Raw HID Functionality
  * Move to specified layer
 
-## How to install the firmware?
+## How to Install the Firmware?
  1. Go through [The QMK Tutorial](https://docs.qmk.fm/#/newbs).
  2. Insert the desired _config.h_, _rules.mk_, and _keymap.c_ files where appropriate prior to building and uploading the firmware. 
    
