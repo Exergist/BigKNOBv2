@@ -66,4 +66,3 @@ Also includes C# application (using [HidLibrary](https://github.com/mikeobrien/H
   * CovfefeMcWhiskey
   * trankillity
   * tzarc
-  * Dākyfox
