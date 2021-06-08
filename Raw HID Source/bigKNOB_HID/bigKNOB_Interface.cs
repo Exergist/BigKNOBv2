@@ -14,8 +14,6 @@ namespace bigKNOB_HID
 
         #endregion
 
-        #region Main
-
         static void Main(string[] args)
         {
             // Target HidDevice (BigKNOB) information
@@ -34,8 +32,6 @@ namespace bigKNOB_HID
             Console.WriteLine("press any key to continue"); // Output info to event log (debug)
             Console.ReadLine(); // debug
         }
-
-        #endregion
     }
 }
 
