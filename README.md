@@ -1,6 +1,6 @@
 ![image](https://user-images.githubusercontent.com/31357974/120911848-11029f80-c650-11eb-8896-d142378cb411.png)
 
-# qmk.BigKNOBv2
+# BigKNOBv2
 
 ## What is this?
 QMK files for BigKNOBv2 macropad controller with RGB LED key switches.
