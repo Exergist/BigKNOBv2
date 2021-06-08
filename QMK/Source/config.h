@@ -25,7 +25,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define DEVICE_VER      0x0001
 #define MANUFACTURER    leafcutterlabs
 #define PRODUCT         bigKNOBv2
-#define DESCRIPTION     5 key with rotary  board
+#define DESCRIPTION     5 key with rotary board
+#define RAW_USAGE_PAGE 	0xFF60 // Raw HID communication
+#define RAW_USAGE_ID 	0x61 // Raw HID communication
 
 /* Key matrix size */
 #define MATRIX_ROWS 1
