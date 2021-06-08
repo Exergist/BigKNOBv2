@@ -44,13 +44,13 @@ Also includes C# application (using [HidLibrary](https://github.com/mikeobrien/H
  2. Insert the desired _config.h_, _rules.mk_, and _keymap.c_ files where appropriate prior to building and uploading the firmware. 
    
 ## Notes
- * My BigKNOBv2 was custom-made and ordered through [Etsy](https://www.etsy.com/shop/LeafCutterLabs?ref=simple-shop-header-name&listing_id=955302431). 
+ * My BigKNOBv2 was custom-ordered through [Etsy](https://www.etsy.com/shop/LeafCutterLabs?ref=simple-shop-header-name&listing_id=955302431). 
  * The keymap was optimized for use with the BigKNOBv2 dented encoder. 
  * Additional QMK resources are compiled in the [QMK Syllabus](https://docs.qmk.fm/#/syllabus).
 
 ## Acknowledgements
 
-* BigKNOBv2 hardware design and QMK source files are by Craig Gardner from [LeafCutterLabs](https://github.com/LeafCutterLabs).
+* BigKNOBv2 hardware design and original QMK source files are by Craig Gardner from [LeafCutterLabs](https://github.com/LeafCutterLabs).
 * [QMK](https://qmk.fm/) is developed and maintained by Jack Humbert of OLKB with contributions from the community.
 * [HidLibrary](https://github.com/mikeobrien/HidLibrary) is developed and maintained by Mike O'Brien and Austin Mullins (and other contributors).
 * Keymap header ASCII art by [patorjk](https://patorjk.com/software/taag/).
