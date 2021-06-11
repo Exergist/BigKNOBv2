@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("bigKNOB_HID")]
+[assembly: AssemblyTitle("Ex.HidInterface.Demo")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("bigKNOB_HID")]
+[assembly: AssemblyProduct("Ex.HidInterface.Demo")]
 [assembly: AssemblyCopyright("Copyright ©  2021")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("166645b7-0344-4b6b-b3d8-feacb5d23c70")]
+[assembly: Guid("aac8cf3c-c822-4534-9cfa-99fae084003a")]
 
 // Version information for an assembly consists of the following four values:
 //

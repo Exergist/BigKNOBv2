@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2048
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ex.HidInterface.Demo", "Ex.HidInterface.Demo\Ex.HidInterface.Demo.csproj", "{AAC8CF3C-C822-4534-9CFA-99FAE084003A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ex.HidInterface", "Ex.HidInterface\Ex.HidInterface.csproj", "{FFDAAD91-48A1-4EE0-A323-95443FA86155}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AAC8CF3C-C822-4534-9CFA-99FAE084003A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AAC8CF3C-C822-4534-9CFA-99FAE084003A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AAC8CF3C-C822-4534-9CFA-99FAE084003A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AAC8CF3C-C822-4534-9CFA-99FAE084003A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FFDAAD91-48A1-4EE0-A323-95443FA86155}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FFDAAD91-48A1-4EE0-A323-95443FA86155}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FFDAAD91-48A1-4EE0-A323-95443FA86155}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FFDAAD91-48A1-4EE0-A323-95443FA86155}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F180F9BB-6361-4BD9-86C2-92060CA8F915}
+	EndGlobalSection
+EndGlobal

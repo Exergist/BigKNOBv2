@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{166645B7-0344-4B6B-B3D8-FEACB5D23C70}</ProjectGuid>
+    <ProjectGuid>{AAC8CF3C-C822-4534-9CFA-99FAE084003A}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>bigKNOB_HID</RootNamespace>
-    <AssemblyName>bigKNOB_HID</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <RootNamespace>Ex.HidInterface.Demo</RootNamespace>
+    <AssemblyName>Ex.HidInterface.Demo</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
@@ -33,20 +33,20 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="HidLibrary, Version=3.2.49.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\hidlibrary.3.3.40\lib\net45\HidLibrary.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
-    <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="HID_Interface.cs" />
-    <Compile Include="bigKNOB_Interface.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Ex.HidInterface\Ex.HidInterface.csproj">
+      <Project>{ffdaad91-48a1-4ee0-a323-95443fa86155}</Project>
+      <Name>Ex.HidInterface</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
