@@ -17,8 +17,9 @@
 //   • Next layer via encoder single-tap
 //   • Previous layer via encoder press-hold
 //   • RGB LEDs toggle on/off via encoder double-tap
-//   • Raw HID communication with C# application on host computer
+//   • Raw HID bicommunication with C# application on host computer
 //   • RGB LED 'ErrorFlash' to indicate issues
+//   • RGB LED 'LightFlash' for general indication and debugging
 //   • Harmonized function key mapping
 //   • Restructured layout and code organization
 //   • Expanded new line and tab formatting
@@ -59,20 +60,23 @@ void MoveToLayer(int layer);
 void ChangeLedColor(void);
 void ToggleRgbLED(void);
 void ErrorFlash(void);
+void LightFlash(void);
+void SendHID(void);
 
 //}
 
-/* //{ CUSTOM KEYCODE DECLARATION
+//{ CUSTOM KEYCODE DECLARATION
 
 enum custom_keycodes
 {
-	CTRLF13 = SAFE_RANGE,
+	KC_SendHID = SAFE_RANGE
+	/* CTRLF13 = SAFE_RANGE,
 	CTRLF14,
 	CTRLF15,
-	CTRLF16
+	CTRLF16 */
 };
 
-//} */
+//}
 
 //{ LAYERS
 
@@ -230,7 +234,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] =
 	[_PRIMARY] = LAYOUT // Layer 0
 	(
 		// ENCODER_DANCE, F13, F14, F15, F16
-		TD(ENCODER_DANCE), KC_F13, KC_F14, KC_F15, KC_F16
+		///TD(ENCODER_DANCE), KC_F13, KC_F14, KC_F15, KC_F16
+		TD(ENCODER_DANCE), KC_F13, KC_F14, KC_F15, KC_SendHID
 	),
 	[_SECONDARY] = LAYOUT // Layer 1
 	(
@@ -280,14 +285,14 @@ void encoder_update_user(uint8_t index, bool clockwise)
 
 //}
 
-/* //{ CUSTOM KEYCODE PROCESSING
+//{ CUSTOM KEYCODE PROCESSING
 
 // Define behavior for custom keycodes
 bool process_record_user(uint16_t keycode, keyrecord_t *record)
 {
 	switch (keycode) // Switch statement for handling triggering keycodes
 	{
-		case CTRLF13: // Triggering keycode is the (custom) CTRLF13
+		/* case CTRLF13: // Triggering keycode is the (custom) CTRLF13
 			if (record->event.pressed)  // Check if the triggering action was a physical key "press" (down)
 				tap_code16(LCTL(KC_F13)); // Send command to "tap" (down and up events) the Left Control and F13 keys
 			else // Triggering action was a physical key "release" (up)
@@ -318,17 +323,26 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 			{
 				// when keycode QMKBEST is released
 			}
+			return false; */
+		case KC_SendHID:
+			if (record->event.pressed)
+				SendHID(); // Call command to send Raw HID data to host computer
+			else
+			{
+				// when keycode QMKBEST is released
+			}
 			return false;
 	}
 	return true; // Effectively process ALL other keycodes "normally"
 };
 
-//} */
+//}
 
 //{ RAW HID
 
 //{ bigKNOBv2 HID Info
 
+// This is specific to your bigKNOBv2
 // Vendor ID	= 	0xCEEB
 // Product ID 	= 	0x0007
 // Usage Page 	= 	0xFF60
@@ -354,6 +368,19 @@ void raw_hid_receive(uint8_t *data, uint8_t length)
 			ErrorFlash(); // Flash RGB LEDs to indicate issue
 			break;
 	}
+	
+	SendHID(); // Call method to send data to host computer
+}
+
+// Method for sending data to host computer via a HID interface
+void SendHID(void)
+{
+	uint8_t data[RAW_EPSIZE]; // Declare array for storing data for sending to host computer
+    memset(data, 0, RAW_EPSIZE);
+	data[0] = 'B';
+	
+	raw_hid_send(data, RAW_EPSIZE); // Call method to send data to host computer
+	LightFlash(); // debug
 }
 
 //}
@@ -428,8 +455,8 @@ void ErrorFlash(void)
 {
 	bool isLightingEnabled = rgblight_is_enabled(); // Store current state of RGB LEDs
 	
-	float timeStep = 250; // Time step for cycling flashing colors (ms)
-	int flashTime = 2000; // Amount of time to flash LEDs (ms)
+	float timeStep = 125; // Time step for cycling flashing colors (ms)
+	int flashTime = 1000; // Amount of time to flash LEDs (ms)
 	float timer = 0;
 	
 	// Turn on RGB LEDs if applicable
@@ -453,4 +480,21 @@ void ErrorFlash(void)
 		ChangeLedColor();
 }
 
+// Method for flashing RGB LEDs for confirmation and debugging of actions
+void LightFlash(void)
+{
+	float timeStep = 125; // Time step for cycling flashing colors (ms)
+	int flashTime = 1000; // Amount of time to flash LEDs (ms)
+	float timer = 0;
+	
+	// Loop over flashTime while toggling RGB LEDs every timeStep
+	while (timer < flashTime)
+	{
+		ToggleRgbLED();
+		wait_ms(timeStep);
+		ToggleRgbLED();
+		wait_ms(timeStep);
+		timer += (timeStep * 2);
+	}
+}
 //}
