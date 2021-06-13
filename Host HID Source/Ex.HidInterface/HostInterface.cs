@@ -13,7 +13,6 @@ namespace Ex.HidInterface
         private int _productID;
         private int _usagePage;
         private int _usageID;
-        private string hidDeviceName;
 
         #endregion
 
@@ -29,10 +28,19 @@ namespace Ex.HidInterface
 
         #region Properties
 
+        // Property indicating the name of the target HidDevice
+        public string DeviceName { get; private set; }
+
         // Property indicating if HostInterface (computer) is connected to HidDevice
         public bool IsConnected
         {
-            get { return kbDevice.IsConnected; }
+            get
+            {
+                if (kbDevice?.IsConnected != true)
+                    return false;
+                else
+                    return true;
+            }
         }
 
         // Property indicating if HostInterface (computer) is listening for messages from HidDevice
@@ -76,7 +84,7 @@ namespace Ex.HidInterface
                 _usageID = -1;
 
             // Transfer passed-in target HidDevice name
-            hidDeviceName = deviceName;
+            this.DeviceName = deviceName;
         }
 
         #endregion
@@ -105,18 +113,18 @@ namespace Ex.HidInterface
                 }
                 if (kbDevice != null) // Check if target HidDevice not found
                 {
-                    Console.WriteLine(hidDeviceName + " found!"); // Output info to event log (debug)
+                    Console.WriteLine(this.DeviceName + " found!"); // Output info to event log (debug)
                     kbDevice.OpenDevice(); // Open connection between HostInterface (computer) and HidDevice
-                    IsListening = hidDeviceListeningEnabled; // Transfer passed-in listening state (and activate listening for HidDevice data messages if applicable)
+                    this.IsListening = hidDeviceListeningEnabled; // Transfer passed-in listening state (and activate listening for HidDevice data messages if applicable)
                     kbDevice.Inserted += DeviceAttachedHandler; // Subscribe to HidDevice attachment events
                     kbDevice.Removed += DeviceRemovedHandler; // Subscribe to HidDevice removal events
                 }
                 else
-                    Console.WriteLine("Could not find " + hidDeviceName); // Output info to event log
+                    Console.WriteLine("Could not find " + this.DeviceName); // Output info to event log
             }
             catch (Exception ex) // Handle exceptions encountered in above code
             {
-                Console.WriteLine("Error connecting to " + hidDeviceName + "." + ex.Message); // Output info to event log
+                Console.WriteLine("Error connecting to " + this.DeviceName + "." + ex.Message); // Output info to event log
             }
         }
 
@@ -126,13 +134,13 @@ namespace Ex.HidInterface
             bool result = false; // Initialize variable for storing processing result
             try // Attempt the following code...
             {
-                if (kbDevice?.IsConnected != true) // Check if kbDevice is NOT connected to HostInterface computer
+                if (this.IsConnected == false) // Check if HostInterface (computer) is NOT connected to target HidDevice
                 {
-                    string connectionFailedMessage = hidDeviceName + " is not connected"; // Store output message
+                    string connectionFailedMessage = this.DeviceName + " is not connected"; // Store output message
                     if (retry == true) // Check if connection with kbDevice should be reattempted
                     {
-                        Connect(IsListening); // Call method to connect with target HidDevice
-                        if (kbDevice?.IsConnected != true) // Check if kbDevice is (still) NOT connected to HostInterface (computer)
+                        Connect(this.IsListening); // Call method to connect with target HidDevice
+                        if (this.IsConnected == false) // Check if HostInterface (computer) is (still) NOT connected to target HidDevice
                             Console.WriteLine(connectionFailedMessage); // Output info to event log
                         else
                             result = true; // Update result
@@ -145,15 +153,15 @@ namespace Ex.HidInterface
             }
             catch (Exception ex) // Handle exceptions encountered in above code
             {
-                Console.WriteLine("Error checking connection with " + hidDeviceName + "." + ex.Message); // Output info to event log
+                Console.WriteLine("Error checking connection with " + this.DeviceName + "." + ex.Message); // Output info to event log
             }
             // if (result == true) // Check if result is TRUE (debug)
-                // Console.WriteLine(hidDeviceName + " is connected"); // Output info to event log (debug)
+                // Console.WriteLine(this.DeviceName + " is connected"); // Output info to event log (debug)
             return result;
         }
 
         // Method for sending data to a HidDevice
-        public bool Send(int action, int context, bool retry = false)
+        public bool Send(int action, int? context = null, bool retry = false)
         {
             ///throw new Exception("test"); // (debug)
             bool result = false; // Initialize variable for storing processing result
@@ -169,18 +177,19 @@ namespace Ex.HidInterface
                 // This is configured to communicate with QMK (Raw HID)
                 OutData[0] = 0; // 'Report ID' not received by QMK, so set to zero
                 OutData[1] = (byte)action; // Action for HidDevice to execute
-                OutData[2] = (byte)context; // Context for desired HidAction
+                if (context != null) // Check if context contains data
+                    OutData[2] = (byte)context; // Context for desired HidAction
 
                 // Send OutData to HidDevice
-                Console.WriteLine("Sending data to " + hidDeviceName); // Output info to event log (debug)
+                Console.WriteLine("Sending data to " + this.DeviceName); // Output info to event log (debug)
                 if (kbDevice.Write(OutData) == false) // Send OutData to HidDevice and check if process was NOT successful
-                    Console.WriteLine("Could not send data to " + hidDeviceName); // Output info to event log
+                    Console.WriteLine("Could not send data to " + this.DeviceName); // Output info to event log
                 else
                     result = true; // Update result
             }
             catch (Exception ex) // Handle exceptions encountered in above code
             {
-                Console.WriteLine("Error sending data to " + hidDeviceName + "." + ex.Message); // Output info to event log
+                Console.WriteLine("Error sending data to " + this.DeviceName + "." + ex.Message); // Output info to event log
             }
             return result; // Return result from this method
         }
@@ -198,7 +207,7 @@ namespace Ex.HidInterface
                 // Read data received from HidDevice
                 HidDeviceData InData = kbDevice.Read(1000); // Read data from HidDevice (with timeout of 1000 ms?)
                 if (InData.Status != HidDeviceData.ReadStatus.Success) // Check if reading data from HidDevice was NOT successful
-                    Console.WriteLine("Could not read data from " + hidDeviceName); // Output info to event log
+                    Console.WriteLine("Could not read data from " + this.DeviceName); // Output info to event log
                 else
                 {
                     int[] data = Array.ConvertAll(InData.Data, c => (int)c); // Convert received byte data to integer array
@@ -208,7 +217,7 @@ namespace Ex.HidInterface
             }
             catch (Exception ex) // Handle exceptions encountered in above code
             {
-                Console.WriteLine("Error receiving data from " + hidDeviceName + "." + ex.Message); // Output info to event log
+                Console.WriteLine("Error receiving data from " + this.DeviceName + "." + ex.Message); // Output info to event log
             }
             return result; // Return result from this method
         }
@@ -218,8 +227,8 @@ namespace Ex.HidInterface
         {
             if (kbDevice != null) // Check if kbDevice is still 'active'
             {
-                Console.WriteLine("Closing connection with " + hidDeviceName); // Output info to event log (debug)
-                IsListening = false; // Disable HostInterface (computer) listening for HidDevice messages
+                Console.WriteLine("Closing connection with " + this.DeviceName); // Output info to event log (debug)
+                this.IsListening = false; // Disable HostInterface (computer) listening for HidDevice messages
                 kbDevice.Inserted -= DeviceAttachedHandler; // Unsubscribe from HidDevice attachment events
                 kbDevice.Removed -= DeviceRemovedHandler; // Unsubscribe from HidDevice removal events
                 kbDevice.CloseDevice(); // Close connection with kbDevice
@@ -235,19 +244,19 @@ namespace Ex.HidInterface
         // Method run when HidDevice is attached (with HostInterface having previously identified the HidDevice)
         private void DeviceAttachedHandler()
         {
-            Console.WriteLine(hidDeviceName + " attached"); // Output info to event log (debug)
+            Console.WriteLine(this.DeviceName + " attached"); // Output info to event log (debug)
         }
 
         // Method run when HidDevice is removed (with HostInterface having previously identified the HidDevice)
         private void DeviceRemovedHandler()
         {
-            Console.WriteLine(hidDeviceName + " removed"); // Output info to event log (debug)
+            Console.WriteLine(this.DeviceName + " removed"); // Output info to event log (debug)
         }
 
         // Method run when HidDevice sends data to the (connected and listening) HostInterface (computer)
         private void OnReport(HidReport report)
         {
-            if (IsConnected == false || IsListening == false) // Check if HostInterface (computer) is NOT connected to HidDevice OR is NOT listening for HidDevice messages 
+            if (this.IsConnected == false || this.IsListening == false) // Check if HostInterface (computer) is NOT connected to HidDevice OR is NOT listening for HidDevice messages 
                 return; // Return from this method
 
             if (report.Data.Length >= 4) // Check if length of received data is greater than or equal to 4 elements

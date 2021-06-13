@@ -24,7 +24,7 @@ namespace Ex.HidInterface.Demo
             // Connect with target HidDevice and engage automatic 'listening' for HidDevice data messages
             hostInterface.Connect(true); 
 
-            Console.WriteLine("press any key to continue"); // Output info to event log (debug)
+            Console.WriteLine("Press any key to send message to HidDevice"); // Output info to event log (debug)
             Console.ReadLine();
 
             // Send data to target HidDevice
@@ -34,14 +34,14 @@ namespace Ex.HidInterface.Demo
             // Recommended to use automatic 'listening' instead of this (engaged via hostInterface.Connect seen above)
             hostInterface.Receive(); */
 
-            Console.WriteLine("press any key to continue"); // Output info to event log (debug)
+            Console.WriteLine("Press any key to close connection with HidDevice"); // Output info to event log (debug)
             Console.ReadLine();
 
             // Close HidDevice interface
             hostInterface.Close();
 
             // Debug for the event log
-            Console.WriteLine("press any key to continue"); // Output info to event log (debug)
+            Console.WriteLine("Press any key to continue"); // Output info to event log (debug)
             Console.ReadLine(); // debug
         }
     }
