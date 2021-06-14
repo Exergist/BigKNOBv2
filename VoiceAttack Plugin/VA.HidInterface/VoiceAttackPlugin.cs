@@ -11,7 +11,10 @@
 // introduce mechanism for user to input HID hardware info (instead of it being hardcoded below)
 
 
+using IniParser;
+using IniParser.Model;
 using System;
+using System.IO;
 
 namespace VA.HidInterface
 {
@@ -22,6 +25,7 @@ namespace VA.HidInterface
         private static bool vaVersionCompatible = false;
         private static dynamic VA;
         private static HostInterface hostInterface;
+        private static string hidConfigFileName = "HIDConfig.ini";
         private static readonly Version requiredVaVersion = new Version(1, 8, 7); /// update this for new 1.8.8 version!
 
         #endregion
@@ -30,6 +34,7 @@ namespace VA.HidInterface
 
         private enum HidInterfaceAction
         {
+            Initialize,
             Connect,
             Disconnect,
             Check,
@@ -66,19 +71,42 @@ namespace VA.HidInterface
             {
                 vaVersionCompatible = true;
 
-                // Target HID hardware information (with identifying info as hexadecimal strings)
+                string hidConfigFilePath = Path.Combine(System.IO.Directory.GetParent(vaProxy.PluginPath()).FullName, hidConfigFileName);
+                if (File.Exists(hidConfigFilePath) ==  true)
+                {
+                    // Read the INI file
+
+                    var parser = new FileIniDataParser();
+                    IniData data = parser.ReadFile(hidConfigFilePath);
+                    KeyDataCollection keyCol = data["HID Hardware Info"];
+
+                    string deviceName = keyCol["DeviceName"];
+                    string vendorID = keyCol["VendorID"];
+                    string productID = keyCol["ProductID"];
+                    string usagePage = keyCol["UsagePage"];
+                    string usage = keyCol["Usage"];
+
+                    // Create new HostInterface instance and pass it target HID hardware's information
+                    // It is strongly recommended that all the below information be provided (your mileage may vary)
+                    hostInterface = new HostInterface(deviceName, vendorID, productID, usagePage, usage);
+
+                    // Connect with target HID hardware and engage automatic 'listening' for HID hardware data messages
+                    hostInterface.Connect(true);
+                }
+
+                /* // Target HID hardware information (with identifying info as hexadecimal strings)
                 string deviceName = "bigKNOBv2";
                 string vendorID = "0xCEEB";
                 string productID = "0x0007";
                 string usagePage = "0xFF60";
-                string usageID = "0x61";
+                string usage = "0x61";
 
                 // Create new HostInterface instance and pass it target HID hardware's information
                 // It is strongly recommended that all the below information be provided (your mileage may vary)
-                hostInterface = new HostInterface(deviceName, vendorID, productID, usagePage, usageID);
+                hostInterface = new HostInterface(deviceName, vendorID, productID, usagePage, usage);
 
                 // Connect with target HID hardware and engage automatic 'listening' for HID hardware data messages
-                hostInterface.Connect(true);
+                hostInterface.Connect(true); */
             }
             else
                 OutputToLog(VA_DisplayName() + " requires VoiceAttack v" + requiredVaVersion.ToString() + " or later, but v" + vaProxy.VAVersion.ToString() + " is currently installed", "red");
@@ -88,7 +116,7 @@ namespace VA.HidInterface
         public static void VA_Exit1(dynamic vaProxy)
         {
             // Close interface with HID hardware
-            hostInterface.Close();
+            hostInterface?.Close();
         }
 
         // Method run when a "stop all commands" VoiceAttack action is performed
@@ -114,6 +142,11 @@ namespace VA.HidInterface
                 return;
             }
             ///OutputToLog(action.ToString().ToLower(), "purple"); // debug
+            if (hostInterface == null && hidInterfaceAction != HidInterfaceAction.Initialize)
+            {
+                OutputToLog("HID hardware not initialized. Cannot perform VAHidInterface '" + hidInterfaceAction.ToString().ToLower() + "' action", "red");
+                return;
+            }
 
             #endregion
 
@@ -122,6 +155,31 @@ namespace VA.HidInterface
             bool invalidContext = false;
             switch (hidInterfaceAction)
             {
+                case HidInterfaceAction.Initialize: // Initialize HID hardware interface. Context ==> initialize : DeviceName : VendorID : ProductID : UsagePage : Usage. DeviceName, VendorID, and ProductID are required, while UsagePage and Usage are recommended.
+                    {
+                        hostInterface?.Close(); // Call method to disconnect VoiceAttack from target HID hardware
+                        if (context.Length == 6 || context.Length == 4)
+                        {
+                            string deviceName = context[1];
+                            string vendorID = context[2];
+                            string productID = context[3];
+                            string usagePage = null;
+                            string usage = null;
+                            if (context.Length == 6)
+                            {
+                                usagePage = context[4];
+                                usage = context[5];
+                            }
+
+                            // Create new HostInterface instance and pass it target HID hardware's information
+                            // It is strongly recommended that all the below information be provided (your mileage may vary)
+                            hostInterface = new HostInterface(deviceName, vendorID, productID, usagePage, usage);
+
+                            // Connect with target HID hardware and engage automatic 'listening' for HID hardware data messages
+                            hostInterface.Connect(true);
+                        }
+                        break;
+                    }
                 case HidInterfaceAction.Connect: // Connect VoiceAttack with target HID hardware. Context ==> connect
                     if (context.Length == 1)
                     {

@@ -15,7 +15,7 @@ namespace VA.HidInterface
         private int _vendorID;
         private int _productID;
         private int _usagePage;
-        private int _usageID;
+        private int _usage;
         private int deviceAttachCount = 0;
 
         #endregion
@@ -76,7 +76,7 @@ namespace VA.HidInterface
         #region Constructor
 
         // Method for creating HostInterface instance
-        public HostInterface(string deviceName, string vendorID, string productID, string usagePage = null, string usageID = null)
+        public HostInterface(string deviceName, string vendorID, string productID, string usagePage = null, string usage = null)
         {
             // Convert passed-in hexadecimal strings (for target HidDevice) to integers
             _vendorID = ConvertHexStringToInt(vendorID);
@@ -85,10 +85,10 @@ namespace VA.HidInterface
                 _usagePage = ConvertHexStringToInt(usagePage);
             else
                 _usagePage = -1;
-            if (usageID != null)
-                _usageID = ConvertHexStringToInt(usageID);
+            if (usage != null)
+                _usage = ConvertHexStringToInt(usage);
             else
-                _usageID = -1;
+                _usage = -1;
 
             // Transfer passed-in target HidDevice name
             this.DeviceName = deviceName;
@@ -103,7 +103,7 @@ namespace VA.HidInterface
         {
             try // Attempt the following code...
             {
-                if (_usagePage == -1 || _usageID == -1) // Check if usagePage OR usageID were not provided when HostInterface was instantiated
+                if (_usagePage == -1 || _usage == -1) // Check if usagePage OR usage were not provided when HostInterface was instantiated
                     kbDevice = HidDevices.Enumerate(_vendorID, _productID).FirstOrDefault(); // Find first HidDevice that matches _vendorID and _productID
                 else
                 {
@@ -111,7 +111,7 @@ namespace VA.HidInterface
                     ///throw new Exception("test"); // (debug)
                     foreach (HidDevice dev in devices) // Loop through each HidDevice
                     {
-                        if (dev.Capabilities.Usage == _usageID) // Check if current HidDevice matches target device's usageID
+                        if (dev.Capabilities.Usage == _usage) // Check if current HidDevice matches target device's usage
                         {
                             kbDevice = dev; // Store the found HidDevice
                             break; // Break out of parent 'foreach' loop
@@ -315,3 +315,19 @@ namespace VA.HidInterface
         #endregion
     }
 }
+
+#region Acknowledgements
+
+// Mike O'Brien and Austin Mullins (and other contributors) for HidLibrary (https://github.com/mikeobrien/HidLibrary)
+// Ricardo Amores Hernandez (and other contributors) for ini-parser (https://github.com/rickyah/ini-parser)
+// Dasky and fauxpark from the QMK Discord for sharing their code and offering advice during development
+
+#endregion
+
+#region References
+
+// Hex string to int conversion ==> https://theburningmonk.com/2010/02/converting-hex-to-int-in-csharp/
+// ASCII to Hex Conversion ==> https://www.rapidtables.com/convert/number/ascii-hex-bin-dec-converter.html
+// 'MagtekCardReader' example from HidLibrary v3.3.40 ==> https://github.com/mikeobrien/HidLibrary/releases
+
+#endregion
