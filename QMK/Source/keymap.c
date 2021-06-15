@@ -158,13 +158,13 @@ void encoder_finished(qk_tap_dance_state_t *state, void *user_data)
     encoderTap_state.state = cur_dance(state);
     switch (encoderTap_state.state)
 	{
-        	case TD_SINGLE_TAP:
+		case TD_SINGLE_TAP:
 			NextLayer(); // Call method to move to next layer
 			break;
-        	case TD_SINGLE_HOLD:
+		case TD_SINGLE_HOLD:
 			PreviousLayer(); // Call method to move to previous layer
 			break;
-        	case TD_DOUBLE_TAP:
+		case TD_DOUBLE_TAP:
 			ToggleRgbLED(); // Call method to toggle the RGB LEDs on/off
 			break;
 		case TD_NONE:
@@ -182,11 +182,11 @@ void encoder_reset(qk_tap_dance_state_t *state, void *user_data)
 {
 	switch (encoderTap_state.state)
 	{
-        	case TD_SINGLE_TAP:
+		case TD_SINGLE_TAP:
 			break;
-        	case TD_SINGLE_HOLD:
+		case TD_SINGLE_HOLD:
 			break;
-        	case TD_DOUBLE_TAP:
+		case TD_DOUBLE_TAP:
 			break;
 		case TD_NONE:
 			// do nothing
@@ -295,42 +295,22 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 		/* case CTRLF13: // Triggering keycode is the (custom) CTRLF13
 			if (record->event.pressed)  // Check if the triggering action was a physical key "press" (down)
 				tap_code16(LCTL(KC_F13)); // Send command to "tap" (down and up events) the Left Control and F13 keys
-			else // Triggering action was a physical key "release" (up)
-			{
-				// when keycode QMKBEST is released
-			}
 			return false; // Return from this method without "normal" handling of keycode
 		case CTRLF14:
 			if (record->event.pressed)
 				tap_code16(LCTL(KC_F14)); // Send command to "tap" (down and up events) the Left Control and F14 keys
-			else
-			{
-				// when keycode QMKBEST is released
-			}
 			return false;
 		case CTRLF15:
 			if (record->event.pressed)
 				tap_code16(LCTL(KC_F15)); // Send command to "tap" (down and up events) the Left Control and F15 keys
-			else
-			{
-				// when keycode QMKBEST is released
-			}
 			return false;
 		case CTRLF16:
 			if (record->event.pressed)
 				tap_code16(LCTL(KC_F16)); // Send command to "tap" (down and up events) the Left Control and F16 keys
-			else
-			{
-				// when keycode QMKBEST is released
-			}
 			return false; */
 		case KC_SendHID:
 			if (record->event.pressed)
 				SendHID(); // Call command to send Raw HID data to host computer
-			else
-			{
-				// when keycode QMKBEST is released
-			}
 			return false;
 	}
 	return true; // Effectively process ALL other keycodes "normally"
