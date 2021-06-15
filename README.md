@@ -3,9 +3,9 @@
 # BigKNOBv2
 
 ## What Is This?
-QMK files for BigKNOBv2 macropad controller with RGB LED key switches.
-
-Also includes functionality for bidirectional communication between BigKNOBv2 and the host computer via a C# application or a VoiceAttack plugin. 
+This project includes:
+1. QMK files for BigKNOBv2 macropad controller with RGB LED key switches.
+2. C# source for application enabling bidirectional communication between BigKNOBv2 and the host computer. 
 
 ## Key Map
 
@@ -47,6 +47,7 @@ Also includes functionality for bidirectional communication between BigKNOBv2 an
  * My BigKNOBv2 was custom-ordered through [Etsy](https://www.etsy.com/shop/LeafCutterLabs?ref=simple-shop-header-name&listing_id=955302431). 
  * The keymap was optimized for use with the BigKNOBv2 dented encoder. 
  * Additional QMK resources are compiled in the [QMK Syllabus](https://docs.qmk.fm/#/syllabus).
+ * A [VoiceAttack plugin](https://github.com/Exergist/VAHidInterface) for communicating with BigKNOBv2 is also available.
 
 ## Acknowledgements
 
