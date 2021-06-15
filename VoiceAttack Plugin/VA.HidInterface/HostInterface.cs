@@ -2,6 +2,8 @@
 // go through "blue" yellow red purple text colors
 
 using HidLibrary;
+using IniParser;
+using IniParser.Model;
 using System;
 using System.Linq;
 
@@ -99,7 +101,7 @@ namespace VA.HidInterface
         #region Interface Methods
 
         // Method for connecting with a HidDevice 
-        public void Connect(bool hidDeviceListeningEnabled = true)
+        public void Connect(bool hidDeviceListeningEnabled = true, string hidConfigFilePath = null)
         {
             try // Attempt the following code...
             {
@@ -133,7 +135,29 @@ namespace VA.HidInterface
             }
             catch (Exception ex) // Handle exceptions encountered in above code
             {
-                VoiceAttackPlugin.OutputToLog("Error connecting to " + this.DeviceName + "." + ex.Message, "red"); // Output info to event log
+                VoiceAttackPlugin.OutputToLog("Error connecting to " + this.DeviceName + ". " + ex.Message, "red"); // Output info to event log
+                return;
+            }
+            try // Attempt the following code...
+            {
+                if (kbDevice != null && hidConfigFilePath != null)  // Check if target HidDevice was found AND a file path was passed into method
+                {
+                    IniData data = new IniData(); // Create new IniData instance
+                    KeyDataCollection keyCol = data["HIDHardwareInfo"]; // Create new KeyDataCollection and file section name
+                    keyCol["DeviceName"] = this.DeviceName; // Store HID hardware device name
+                    keyCol["VendorID"] = "0x" + String.Format("{0:X4}", _vendorID); // Store HID hardware Vendor ID
+                    keyCol["ProductID"] = "0x" + String.Format("{0:X4}", _productID); // Store HID hardware Product ID
+                    keyCol["UsagePage"] = "0x" + String.Format("{0:X4}", _usagePage); // Store HID hardware Usage Page
+                    keyCol["Usage"] = "0x" + String.Format("{0:X4}", _usage); // Store HID hardware Usage
+                    var parser = new FileIniDataParser(); // Create new FileIniDataParser instance
+                    ///string message = "Configuration for '" + this.DeviceName + "'" + (System.IO.File.Exists(hidConfigFilePath) == true ? " updated" : " saved"); // Construct event log message (debug)
+                    parser.WriteFile(hidConfigFilePath, data); // Write stored data to ini file
+                    ///VoiceAttackPlugin.OutputToLog(message, "purple"); // Output info to event log (debug)
+                }
+            }
+            catch (Exception ex) // Handle exceptions encountered in above code
+            {
+                VoiceAttackPlugin.OutputToLog("Error writing " + this.DeviceName + " configuration to file. " + ex.Message, "red"); // Output info to event log
             }
         }
 
@@ -162,7 +186,7 @@ namespace VA.HidInterface
             }
             catch (Exception ex) // Handle exceptions encountered in above code
             {
-                VoiceAttackPlugin.OutputToLog("Error checking connection with " + this.DeviceName + "." + ex.Message, "red"); // Output info to event log
+                VoiceAttackPlugin.OutputToLog("Error checking connection with " + this.DeviceName + ". " + ex.Message, "red"); // Output info to event log
             }
             /// if (result == true) // Check if result is true (debug)
                 /// VoiceAttackPlugin.OutputToLog(this.DeviceName + " is connected", "purple"); // Output info to event log (debug)
@@ -198,7 +222,7 @@ namespace VA.HidInterface
             }
             catch (Exception ex) // Handle exceptions encountered in above code
             {
-                VoiceAttackPlugin.OutputToLog("Error sending data to " + this.DeviceName + "." + ex.Message, "red"); // Output info to event log
+                VoiceAttackPlugin.OutputToLog("Error sending data to " + this.DeviceName + ". " + ex.Message, "red"); // Output info to event log
             }
             return result; // Return result from this method
         }
@@ -236,7 +260,7 @@ namespace VA.HidInterface
             }
             catch (Exception ex) // Handle exceptions encountered in above code
             {
-                VoiceAttackPlugin.OutputToLog("Error receiving data from " + this.DeviceName + "." + ex.Message, "red"); // Output info to event log
+                VoiceAttackPlugin.OutputToLog("Error receiving data from " + this.DeviceName + ". " + ex.Message, "red"); // Output info to event log
             }
             return result; // Return result from this method
         }
@@ -244,17 +268,24 @@ namespace VA.HidInterface
         // Method for closing HidDevice interface
         public void Close()
         {
-            if (kbDevice != null) // Check if kbDevice is still 'active'
+            try // Attempt the following code
             {
-                this.IsActive = false; // Reset flag indicating interface between HostInterface (computer) and HidDevice is NOT active
-                this.IsListening = false; // Disable HostInterface (computer) listening for HidDevice messages
-                kbDevice.Inserted -= DeviceAttachedHandler; // Unsubscribe from HidDevice attachment events
-                kbDevice.Removed -= DeviceRemovedHandler; // Unsubscribe from HidDevice removal events
-                kbDevice.CloseDevice(); // Close connection with kbDevice
-                kbDevice.Dispose(); // Dispose of kbDevice instance
-                kbDevice = null; // Set kbDevice instance as null
-                deviceAttachCount = 0; // Reset counter for device attachment events
-                VoiceAttackPlugin.OutputToLog("Closing interface between VoiceAttack and " + this.DeviceName, "blue"); // Output info to event log
+                if (kbDevice != null) // Check if kbDevice is still 'active'
+                {
+                    this.IsActive = false; // Reset flag indicating interface between HostInterface (computer) and HidDevice is NOT active
+                    this.IsListening = false; // Disable HostInterface (computer) listening for HidDevice messages
+                    kbDevice.Inserted -= DeviceAttachedHandler; // Unsubscribe from HidDevice attachment events
+                    kbDevice.Removed -= DeviceRemovedHandler; // Unsubscribe from HidDevice removal events
+                    kbDevice.CloseDevice(); // Close connection with kbDevice
+                    kbDevice.Dispose(); // Dispose of kbDevice instance
+                    kbDevice = null; // Set kbDevice instance as null
+                    deviceAttachCount = 0; // Reset counter for device attachment events
+                    VoiceAttackPlugin.OutputToLog("Closing interface between VoiceAttack and " + this.DeviceName, "blue"); // Output info to event log
+                }
+            }
+            catch (Exception ex) // Handle exceptions encountered in above code
+            {
+                VoiceAttackPlugin.OutputToLog("Error closing interface between VoiceAttack and " + this.DeviceName + ". " + ex.Message, "red"); // Output info to event log
             }
         }
 

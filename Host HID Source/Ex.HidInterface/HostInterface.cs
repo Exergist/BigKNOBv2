@@ -130,7 +130,7 @@ namespace Ex.HidInterface
             }
             catch (Exception ex) // Handle exceptions encountered in above code
             {
-                Console.WriteLine("Error connecting to " + this.DeviceName + "." + ex.Message); // Output info to event log
+                Console.WriteLine("Error connecting to " + this.DeviceName + ". " + ex.Message); // Output info to event log
             }
         }
 
@@ -159,7 +159,7 @@ namespace Ex.HidInterface
             }
             catch (Exception ex) // Handle exceptions encountered in above code
             {
-                Console.WriteLine("Error checking connection with " + this.DeviceName + "." + ex.Message); // Output info to event log
+                Console.WriteLine("Error checking connection with " + this.DeviceName + ". " + ex.Message); // Output info to event log
             }
             // if (result == true) // Check if result is true (debug)
                 // Console.WriteLine(this.DeviceName + " is connected"); // Output info to event log (debug)
@@ -195,7 +195,7 @@ namespace Ex.HidInterface
             }
             catch (Exception ex) // Handle exceptions encountered in above code
             {
-                Console.WriteLine("Error sending data to " + this.DeviceName + "." + ex.Message); // Output info to event log
+                Console.WriteLine("Error sending data to " + this.DeviceName + ". " + ex.Message); // Output info to event log
             }
             return result; // Return result from this method
         }
@@ -232,7 +232,7 @@ namespace Ex.HidInterface
             }
             catch (Exception ex) // Handle exceptions encountered in above code
             {
-                Console.WriteLine("Error receiving data from " + this.DeviceName + "." + ex.Message); // Output info to event log
+                Console.WriteLine("Error receiving data from " + this.DeviceName + ". " + ex.Message); // Output info to event log
             }
             return result; // Return result from this method
         }
@@ -240,17 +240,24 @@ namespace Ex.HidInterface
         // Method for closing HidDevice interface
         public void Close()
         {
-            if (kbDevice != null) // Check if kbDevice is still 'active'
+            try // Attempt the following code
             {
-                this.IsActive = false; // Reset flag indicating interface between HostInterface (computer) and HidDevice is NOT active
-                this.IsListening = false; // Disable HostInterface (computer) listening for HidDevice messages
-                kbDevice.Inserted -= DeviceAttachedHandler; // Unsubscribe from HidDevice attachment events
-                kbDevice.Removed -= DeviceRemovedHandler; // Unsubscribe from HidDevice removal events
-                kbDevice.CloseDevice(); // Close connection with kbDevice
-                kbDevice.Dispose(); // Dispose of kbDevice instance
-                kbDevice = null; // Set kbDevice instance as null
-                deviceAttachCount = 0; // Reset counter for device attachment events
-                Console.WriteLine("Closing interface between host computer and " + this.DeviceName); // Output info to event log
+                if (kbDevice != null) // Check if kbDevice is still 'active'
+                {
+                    this.IsActive = false; // Reset flag indicating interface between HostInterface (computer) and HidDevice is NOT active
+                    this.IsListening = false; // Disable HostInterface (computer) listening for HidDevice messages
+                    kbDevice.Inserted -= DeviceAttachedHandler; // Unsubscribe from HidDevice attachment events
+                    kbDevice.Removed -= DeviceRemovedHandler; // Unsubscribe from HidDevice removal events
+                    kbDevice.CloseDevice(); // Close connection with kbDevice
+                    kbDevice.Dispose(); // Dispose of kbDevice instance
+                    kbDevice = null; // Set kbDevice instance as null
+                    deviceAttachCount = 0; // Reset counter for device attachment events
+                    Console.WriteLine("Closing interface between host computer and " + this.DeviceName); // Output info to event log
+                }
+            }
+            catch (Exception ex) // Handle exceptions encountered in above code
+            {
+                Console.WriteLine("Error closing interface between VoiceAttack and " + this.DeviceName + ". " + ex.Message); // Output info to event log
             }
         }
 

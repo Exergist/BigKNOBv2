@@ -8,13 +8,11 @@
 // change required version to 1.8.8 when ready
 // compare and update Ex.HidInterface Code vs the HostInterface code here
 // possibly add better error logging
-// introduce mechanism for user to input HID hardware info (instead of it being hardcoded below)
 
 
 using IniParser;
 using IniParser.Model;
 using System;
-using System.IO;
 
 namespace VA.HidInterface
 {
@@ -25,7 +23,8 @@ namespace VA.HidInterface
         private static bool vaVersionCompatible = false;
         private static dynamic VA;
         private static HostInterface hostInterface;
-        private static string hidConfigFileName = "HIDConfig.ini";
+        private static readonly string hidConfigFileName = "HIDConfig.ini";
+        private static string hidConfigFilePath;
         private static readonly Version requiredVaVersion = new Version(1, 8, 7); /// update this for new 1.8.8 version!
 
         #endregion
@@ -70,30 +69,37 @@ namespace VA.HidInterface
             if (vaProxy.VAVersion >= requiredVaVersion)
             {
                 vaVersionCompatible = true;
+                hidConfigFilePath = System.IO.Path.Combine(System.IO.Directory.GetParent(vaProxy.PluginPath()).FullName, hidConfigFileName);
 
-                string hidConfigFilePath = Path.Combine(System.IO.Directory.GetParent(vaProxy.PluginPath()).FullName, hidConfigFileName);
-                if (File.Exists(hidConfigFilePath) ==  true)
+                try // Attempt the following code...
                 {
-                    // Read the INI file
+                    
+                    if (System.IO.File.Exists(hidConfigFilePath) == true)
+                    {
+                        var parser = new FileIniDataParser();
+                        IniData data = parser.ReadFile(hidConfigFilePath);
+                        KeyDataCollection keyCol = data["HIDHardwareInfo"];
 
-                    var parser = new FileIniDataParser();
-                    IniData data = parser.ReadFile(hidConfigFilePath);
-                    KeyDataCollection keyCol = data["HID Hardware Info"];
+                        string deviceName = keyCol["DeviceName"];
+                        string vendorID = keyCol["VendorID"];
+                        string productID = keyCol["ProductID"];
+                        string usagePage = keyCol["UsagePage"];
+                        string usage = keyCol["Usage"];
 
-                    string deviceName = keyCol["DeviceName"];
-                    string vendorID = keyCol["VendorID"];
-                    string productID = keyCol["ProductID"];
-                    string usagePage = keyCol["UsagePage"];
-                    string usage = keyCol["Usage"];
+                        // Create new HostInterface instance and pass it target HID hardware's information
+                        // It is strongly recommended that all the below information be provided (your mileage may vary)
+                        hostInterface = new HostInterface(deviceName, vendorID, productID, usagePage, usage);
 
-                    // Create new HostInterface instance and pass it target HID hardware's information
-                    // It is strongly recommended that all the below information be provided (your mileage may vary)
-                    hostInterface = new HostInterface(deviceName, vendorID, productID, usagePage, usage);
-
-                    // Connect with target HID hardware and engage automatic 'listening' for HID hardware data messages
-                    hostInterface.Connect(true);
+                        // Connect with target HID hardware and engage automatic 'listening' for HID hardware data messages
+                        hostInterface.Connect(true);
+                    }
+                }
+                catch (Exception ex) // Handle exceptions encountered in above code
+                {
+                    OutputToLog("Error initializing stored HID hardware configuration. " + ex.Message, "red"); // Output info to event log
                 }
 
+                // Enable this section (and remove above try-catch block) to hard code the target HidDevice info and create the interface connection upon plugin initialization
                 /* // Target HID hardware information (with identifying info as hexadecimal strings)
                 string deviceName = "bigKNOBv2";
                 string vendorID = "0xCEEB";
@@ -106,7 +112,7 @@ namespace VA.HidInterface
                 hostInterface = new HostInterface(deviceName, vendorID, productID, usagePage, usage);
 
                 // Connect with target HID hardware and engage automatic 'listening' for HID hardware data messages
-                hostInterface.Connect(true); */
+                hostInterface.Connect(true, hidConfigFilePath); */
             }
             else
                 OutputToLog(VA_DisplayName() + " requires VoiceAttack v" + requiredVaVersion.ToString() + " or later, but v" + vaProxy.VAVersion.ToString() + " is currently installed", "red");
@@ -144,7 +150,10 @@ namespace VA.HidInterface
             ///OutputToLog(action.ToString().ToLower(), "purple"); // debug
             if (hostInterface == null && hidInterfaceAction != HidInterfaceAction.Initialize)
             {
-                OutputToLog("HID hardware not initialized. Cannot perform VAHidInterface '" + hidInterfaceAction.ToString().ToLower() + "' action", "red");
+                if (hidInterfaceAction == HidInterfaceAction.Check)
+                    OutputToLog("HID hardware is not initialized", "blue"); 
+                else
+                    OutputToLog("HID hardware is not initialized. Cannot perform VAHidInterface '" + hidInterfaceAction.ToString().ToLower() + "' action.", "red");
                 return;
             }
 
@@ -175,8 +184,8 @@ namespace VA.HidInterface
                             // It is strongly recommended that all the below information be provided (your mileage may vary)
                             hostInterface = new HostInterface(deviceName, vendorID, productID, usagePage, usage);
 
-                            // Connect with target HID hardware and engage automatic 'listening' for HID hardware data messages
-                            hostInterface.Connect(true);
+                            // Call method to connect with target HID hardware, engage automatic 'listening' for HID hardware data messages, and output HID hardware configuration to file
+                            hostInterface.Connect(true, hidConfigFilePath);
                         }
                         break;
                     }
@@ -184,7 +193,7 @@ namespace VA.HidInterface
                     if (context.Length == 1)
                     {
                         if (hostInterface.IsActive == false)
-                            hostInterface.Connect(); // Call method to connect VoiceAttack with target HID hardware
+                            hostInterface.Connect(true, hidConfigFilePath); // Call method to connect with target HID hardware, engage automatic 'listening' for HID hardware data messages, and output HID hardware configuration to file
                         else if (hostInterface.IsConnected == false)
                             OutputToLog("Interface between VoiceAttack and " + hostInterface.DeviceName + " is already active", "yellow");
                         else
