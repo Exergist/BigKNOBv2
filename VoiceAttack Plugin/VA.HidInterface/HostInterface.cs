@@ -224,10 +224,10 @@ namespace VA.HidInterface
                     // Here is an example for debugging
                     /* if (InData.Data.Length >= 4) // Check if length of received data is greater than or equal to 4 elements (change as needed)
                     {
-                        int[] data = Array.ConvertAll(report.Data, c => (int)c); // Convert received byte data to integer array
-                        string[] convertedData = new string[data.Length];
-                        for (int i = 0; i < data.Length; i++)
-                            convertedData[i] = Convert.ToChar(data[i]).ToString();
+                        int[] data = Array.ConvertAll(InData.Data, c => (int)c); // Convert received byte data to integer array
+                        string[] convertedData = new string[data.Length]; // Initialize string array
+                        for (int i = 0; i < data.Length; i++) // Loop through each data element
+                            convertedData[i] = Convert.ToChar(data[i]).ToString(); // Convert current data element to equivalent string element
                         VoiceAttackPlugin.OutputToLog(string.Join("", convertedData), "purple"); // Output info to event log (debug)
                     } */
 
@@ -288,9 +288,9 @@ namespace VA.HidInterface
             /* if (report.Data.Length >= 4) // Check if length of received data is greater than or equal to 4 elements (change as needed)
             {
                 int[] data = Array.ConvertAll(report.Data, c => (int)c); // Convert received byte data to integer array
-                string[] convertedData = new string[data.Length];
-                for (int i = 0; i < data.Length; i++)
-                    convertedData[i] = Convert.ToChar(data[i]).ToString();
+                string[] convertedData = new string[data.Length]; // Initialize string array
+                for (int i = 0; i < data.Length; i++) // Loop through each data element
+                    convertedData[i] = Convert.ToChar(data[i]).ToString(); // Convert current data element to equivalent string element
                 VoiceAttackPlugin.OutputToLog(string.Join("", convertedData), "purple"); // Output info to event log (debug)
             } */
 

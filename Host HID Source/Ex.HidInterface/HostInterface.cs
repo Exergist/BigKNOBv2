@@ -12,7 +12,8 @@ namespace Ex.HidInterface
         private int _vendorID;
         private int _productID;
         private int _usagePage;
-        private int _usageID;
+        private int _usage;
+        private int deviceAttachCount = 0;
 
         #endregion
 
@@ -30,6 +31,9 @@ namespace Ex.HidInterface
 
         // Property indicating the name of the target HidDevice
         public string DeviceName { get; private set; }
+
+        // Property indicating if interface between HostInterface (computer) and HidDevice is active
+        public bool IsActive { get; private set; }
 
         // Property indicating if HostInterface (computer) is connected to HidDevice
         public bool IsConnected
@@ -69,7 +73,7 @@ namespace Ex.HidInterface
         #region Constructor
 
         // Method for creating HostInterface instance
-        public HostInterface(string deviceName, string vendorID, string productID, string usagePage = null, string usageID = null)
+        public HostInterface(string deviceName, string vendorID, string productID, string usagePage = null, string usage = null)
         {
             // Convert passed-in hexadecimal strings (for target HidDevice) to integers
             _vendorID = ConvertHexStringToInt(vendorID);
@@ -78,10 +82,10 @@ namespace Ex.HidInterface
                 _usagePage = ConvertHexStringToInt(usagePage);
             else
                 _usagePage = -1;
-            if (usageID != null)
-                _usageID = ConvertHexStringToInt(usageID);
+            if (usage != null)
+                _usage = ConvertHexStringToInt(usage);
             else
-                _usageID = -1;
+                _usage = -1;
 
             // Transfer passed-in target HidDevice name
             this.DeviceName = deviceName;
@@ -96,7 +100,7 @@ namespace Ex.HidInterface
         {
             try // Attempt the following code...
             {
-                if (_usagePage == -1 || _usageID == -1) // Check if usagePage OR usageID were not provided when HostInterface was instantiated
+                if (_usagePage == -1 || _usage == -1) // Check if usagePage OR usage were not provided when HostInterface was instantiated
                     kbDevice = HidDevices.Enumerate(_vendorID, _productID).FirstOrDefault(); // Find first HidDevice that matches _vendorID and _productID
                 else
                 {
@@ -104,20 +108,22 @@ namespace Ex.HidInterface
                     ///throw new Exception("test"); // (debug)
                     foreach (HidDevice dev in devices) // Loop through each HidDevice
                     {
-                        if (dev.Capabilities.Usage == _usageID) // Check if current HidDevice matches target device's usageID
+                        if (dev.Capabilities.Usage == _usage) // Check if current HidDevice matches target device's usage
                         {
                             kbDevice = dev; // Store the found HidDevice
                             break; // Break out of parent 'foreach' loop
                         }
                     }
                 }
-                if (kbDevice != null) // Check if target HidDevice not found
+                if (kbDevice != null) // Check if target HidDevice was found
                 {
                     Console.WriteLine(this.DeviceName + " found!"); // Output info to event log (debug)
                     kbDevice.OpenDevice(); // Open connection between HostInterface (computer) and HidDevice
+                    this.IsActive = true; // Set flag indicating interface between HostInterface (computer) and HidDevice is active
                     this.IsListening = hidDeviceListeningEnabled; // Transfer passed-in listening state (and activate listening for HidDevice data messages if applicable)
                     kbDevice.Inserted += DeviceAttachedHandler; // Subscribe to HidDevice attachment events
                     kbDevice.Removed += DeviceRemovedHandler; // Subscribe to HidDevice removal events
+                    Console.WriteLine("Host computer is connected with " + this.DeviceName); // Output info to event log
                 }
                 else
                     Console.WriteLine("Could not find " + this.DeviceName); // Output info to event log
@@ -136,7 +142,7 @@ namespace Ex.HidInterface
             {
                 if (this.IsConnected == false) // Check if HostInterface (computer) is NOT connected to target HidDevice
                 {
-                    string connectionFailedMessage = this.DeviceName + " is not connected"; // Store output message
+                    string connectionFailedMessage = this.DeviceName + " is not connected with " + this.DeviceName; // Store output message
                     if (retry == true) // Check if connection with kbDevice should be reattempted
                     {
                         Connect(this.IsListening); // Call method to connect with target HidDevice
@@ -155,7 +161,7 @@ namespace Ex.HidInterface
             {
                 Console.WriteLine("Error checking connection with " + this.DeviceName + "." + ex.Message); // Output info to event log
             }
-            // if (result == true) // Check if result is TRUE (debug)
+            // if (result == true) // Check if result is true (debug)
                 // Console.WriteLine(this.DeviceName + " is connected"); // Output info to event log (debug)
             return result;
         }
@@ -210,8 +216,17 @@ namespace Ex.HidInterface
                     Console.WriteLine("Could not read data from " + this.DeviceName); // Output info to event log
                 else
                 {
-                    int[] data = Array.ConvertAll(InData.Data, c => (int)c); // Convert received byte data to integer array
-                    Console.WriteLine(Convert.ToChar(data[1])); // Output info to event log (debug)
+                    // *Do stuff with data received from HidDevice*
+
+                    // Here is an example for debugging
+                    if (InData.Data.Length >= 4) // Check if length of received data is greater than or equal to 4 elements (change as needed)
+                    {
+                        int[] data = Array.ConvertAll(InData.Data, c => (int)c); // Convert received byte data to integer array
+                        string[] convertedData = new string[data.Length]; // Initialize string array
+                        for (int i = 0; i < data.Length; i++) // Loop through each data element
+                            convertedData[i] = Convert.ToChar(data[i]).ToString(); // Convert current data element to equivalent string element
+                        Console.WriteLine(string.Join("", convertedData)); // Output info to event log (debug)
+                    }
                     result = true; // Update result
                 }
             }
@@ -227,13 +242,15 @@ namespace Ex.HidInterface
         {
             if (kbDevice != null) // Check if kbDevice is still 'active'
             {
-                Console.WriteLine("Closing connection with " + this.DeviceName); // Output info to event log (debug)
+                this.IsActive = false; // Reset flag indicating interface between HostInterface (computer) and HidDevice is NOT active
                 this.IsListening = false; // Disable HostInterface (computer) listening for HidDevice messages
                 kbDevice.Inserted -= DeviceAttachedHandler; // Unsubscribe from HidDevice attachment events
                 kbDevice.Removed -= DeviceRemovedHandler; // Unsubscribe from HidDevice removal events
                 kbDevice.CloseDevice(); // Close connection with kbDevice
                 kbDevice.Dispose(); // Dispose of kbDevice instance
                 kbDevice = null; // Set kbDevice instance as null
+                deviceAttachCount = 0; // Reset counter for device attachment events
+                Console.WriteLine("Closing interface between host computer and " + this.DeviceName); // Output info to event log
             }
         }
 
@@ -244,7 +261,9 @@ namespace Ex.HidInterface
         // Method run when HidDevice is attached (with HostInterface having previously identified the HidDevice)
         private void DeviceAttachedHandler()
         {
-            Console.WriteLine(this.DeviceName + " attached"); // Output info to event log (debug)
+            deviceAttachCount++;
+            if (deviceAttachCount > 1)
+                Console.WriteLine(this.DeviceName + " attached"); // Output info to event log (debug)
         }
 
         // Method run when HidDevice is removed (with HostInterface having previously identified the HidDevice)
@@ -259,10 +278,16 @@ namespace Ex.HidInterface
             if (this.IsConnected == false || this.IsListening == false) // Check if HostInterface (computer) is NOT connected to HidDevice OR is NOT listening for HidDevice messages 
                 return; // Return from this method
 
-            if (report.Data.Length >= 4) // Check if length of received data is greater than or equal to 4 elements
+            // *Do stuff with data received from HidDevice*
+
+            // Here is an example for debugging
+            if (report.Data.Length >= 4) // Check if length of received data is greater than or equal to 4 elements (change as needed)
             {
                 int[] data = Array.ConvertAll(report.Data, c => (int)c); // Convert received byte data to integer array
-                Console.WriteLine(Convert.ToChar(data[0])); // Output info to event log (debug)
+                string[] convertedData = new string[data.Length]; // Initialize string array
+                for (int i = 0; i < data.Length; i++) // Loop through each data element
+                    convertedData[i] = Convert.ToChar(data[i]).ToString(); // Convert current data element to equivalent string element
+                Console.WriteLine(string.Join("", convertedData)); // Output info to event log (debug)
             }
 
             kbDevice.ReadReport(OnReport); // Subscribe to OnReport (as callback) for next received message from HidDevice
@@ -290,6 +315,7 @@ namespace Ex.HidInterface
 #region Acknowledgements
 
 // Mike O'Brien and Austin Mullins (and other contributors) for HidLibrary (https://github.com/mikeobrien/HidLibrary)
+// Ricardo Amores Hernandez (and other contributors) for ini-parser (https://github.com/rickyah/ini-parser)
 // Dasky and fauxpark from the QMK Discord for sharing their code and offering advice during development
 
 #endregion
