@@ -5,7 +5,7 @@
 ## What Is This?
 QMK files for BigKNOBv2 macropad controller with RGB LED key switches.
 
-Also includes C# application (using [HidLibrary](https://github.com/mikeobrien/HidLibrary)) for bidirectional communication between BigKNOBv2 and host computer via Raw HID.
+Also includes functionality for bidirectional communication between BigKNOBv2 and the host computer via a C# application or a VoiceAttack plugin. 
 
 ## Key Map
 
