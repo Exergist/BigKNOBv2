@@ -131,7 +131,7 @@ namespace VA.HidInterface
                     VoiceAttackPlugin.OutputToLog("VoiceAttack is connected with " + this.DeviceName, "blue"); // Output info to event log
                 }
                 else
-                    VoiceAttackPlugin.OutputToLog("Could not find " + this.DeviceName, "red"); // Output info to event log
+                    VoiceAttackPlugin.OutputToLog("Could not find '" + this.DeviceName + "' HID hardware", "red"); // Output info to event log
             }
             catch (Exception ex) // Handle exceptions encountered in above code
             {

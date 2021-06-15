@@ -8,6 +8,7 @@
 // change required version to 1.8.8 when ready
 // compare and update Ex.HidInterface Code vs the HostInterface code here
 // possibly add better error logging
+// possibly transition all single quotes highlighting stuff to double-quotes
 
 
 using IniParser;
@@ -172,6 +173,11 @@ namespace VA.HidInterface
                             string deviceName = context[1];
                             string vendorID = context[2];
                             string productID = context[3];
+                            if (deviceName == "Not set" || vendorID == "Not set" || productID == "Not set") // Check if any required input was not provided
+                            {
+                                OutputToLog("Could not process VAHidInterface '" + hidInterfaceAction.ToString().ToLower() + "' action. Not all required input was provided.", "red");
+                                return;
+                            }
                             string usagePage = null;
                             string usage = null;
                             if (context.Length == 6)
@@ -238,14 +244,14 @@ namespace VA.HidInterface
                                 if (Int32.TryParse(context[2], out int hidActionContext) == true)
                                 {
                                     if (hostInterface.Send((int)hidAction, hidActionContext) == false)
-                                        OutputToLog("Could not perform VAHidInterface '" + hidInterfaceAction + "' action", "red");
+                                        OutputToLog("Could not perform VAHidInterface '" + hidInterfaceAction.ToString().ToLower() + "' action", "red");
                                 }
                                 else
                                     OutputToLog("'" + context[2] + "' is invalid context for HidAction '" + hidAction + "'", "red");
                             }
                         }
                         else
-                            OutputToLog("'" + context[1] + "' is invalid HidAction for VAHidInterface '" + hidInterfaceAction + "' action", "red");
+                            OutputToLog("'" + context[1] + "' is invalid HidAction for VAHidInterface '" + hidInterfaceAction.ToString().ToLower() + "' action", "red");
                     }
                     else
                         invalidContext = true;
