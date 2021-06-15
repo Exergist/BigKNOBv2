@@ -158,13 +158,13 @@ void encoder_finished(qk_tap_dance_state_t *state, void *user_data)
     encoderTap_state.state = cur_dance(state);
     switch (encoderTap_state.state)
 	{
-        case TD_SINGLE_TAP:
+        	case TD_SINGLE_TAP:
 			NextLayer(); // Call method to move to next layer
 			break;
-        case TD_SINGLE_HOLD:
+        	case TD_SINGLE_HOLD:
 			PreviousLayer(); // Call method to move to previous layer
 			break;
-        case TD_DOUBLE_TAP:
+        	case TD_DOUBLE_TAP:
 			ToggleRgbLED(); // Call method to toggle the RGB LEDs on/off
 			break;
 		case TD_NONE:
@@ -180,13 +180,13 @@ void encoder_finished(qk_tap_dance_state_t *state, void *user_data)
 /* // Method run when Tap Dance action resets
 void encoder_reset(qk_tap_dance_state_t *state, void *user_data)
 {
-    switch (encoderTap_state.state)
+	switch (encoderTap_state.state)
 	{
-        case TD_SINGLE_TAP:
+        	case TD_SINGLE_TAP:
 			break;
-        case TD_SINGLE_HOLD:
+        	case TD_SINGLE_HOLD:
 			break;
-        case TD_DOUBLE_TAP:
+        	case TD_DOUBLE_TAP:
 			break;
 		case TD_NONE:
 			// do nothing
@@ -194,7 +194,7 @@ void encoder_reset(qk_tap_dance_state_t *state, void *user_data)
 		case TD_UNKNOWN:
 			// do nothing
 			break;
-    }
+	}
     encoderTap_state.state = TD_NONE;
 } */
 
