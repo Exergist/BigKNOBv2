@@ -105,7 +105,6 @@ namespace Ex.HidInterface
                 else
                 {
                     var devices = HidDevices.Enumerate(_vendorID, _productID, _usagePage); // Capture all HidDevices
-                    ///throw new Exception("test"); // (debug)
                     foreach (HidDevice dev in devices) // Loop through each HidDevice
                     {
                         if (dev.Capabilities.Usage == _usage) // Check if current HidDevice matches target device's usage
@@ -126,7 +125,7 @@ namespace Ex.HidInterface
                     Console.WriteLine("Host computer is connected with " + this.DeviceName); // Output info to event log
                 }
                 else
-                    Console.WriteLine("Could not find " + this.DeviceName); // Output info to event log
+                    Console.WriteLine("Could not find '" + this.DeviceName + "' HID hardware"); // Output info to event log
             }
             catch (Exception ex) // Handle exceptions encountered in above code
             {
@@ -142,7 +141,7 @@ namespace Ex.HidInterface
             {
                 if (this.IsConnected == false) // Check if HostInterface (computer) is NOT connected to target HidDevice
                 {
-                    string connectionFailedMessage = this.DeviceName + " is not connected with " + this.DeviceName; // Store output message
+                    string connectionFailedMessage = "Host computer is not connected with " + this.DeviceName; // Store output message
                     if (retry == true) // Check if connection with kbDevice should be reattempted
                     {
                         Connect(this.IsListening); // Call method to connect with target HidDevice
@@ -169,7 +168,6 @@ namespace Ex.HidInterface
         // Method for sending data to a HidDevice
         public bool Send(int action, int? context = null, bool retry = false)
         {
-            ///throw new Exception("test"); // (debug)
             bool result = false; // Initialize variable for storing processing result
             try // Attempt the following code...
             {
@@ -203,7 +201,6 @@ namespace Ex.HidInterface
         // Method for (manually) receiving data from a HidDevice
         public bool Receive(bool retry = false)
         {
-            ///throw new Exception("test"); // (debug)
             bool result = false; // Initialize variable for storing processing result
             try // Attempt the following code...
             {
@@ -282,22 +279,29 @@ namespace Ex.HidInterface
         // Method run when HidDevice sends data to the (connected and listening) HostInterface (computer)
         private void OnReport(HidReport report)
         {
-            if (this.IsConnected == false || this.IsListening == false) // Check if HostInterface (computer) is NOT connected to HidDevice OR is NOT listening for HidDevice messages 
-                return; // Return from this method
-
-            // *Do stuff with data received from HidDevice*
-
-            // Here is an example for debugging
-            if (report.Data.Length >= 4) // Check if length of received data is greater than or equal to 4 elements (change as needed)
+            try // Attempt the following code...
             {
-                int[] data = Array.ConvertAll(report.Data, c => (int)c); // Convert received byte data to integer array
-                string[] convertedData = new string[data.Length]; // Initialize string array
-                for (int i = 0; i < data.Length; i++) // Loop through each data element
-                    convertedData[i] = Convert.ToChar(data[i]).ToString(); // Convert current data element to equivalent string element
-                Console.WriteLine(string.Join("", convertedData)); // Output info to event log (debug)
-            }
+                if (this.IsConnected == false || this.IsListening == false) // Check if HostInterface (computer) is NOT connected to HidDevice OR is NOT listening for HidDevice messages 
+                    return; // Return from this method
 
-            kbDevice.ReadReport(OnReport); // Subscribe to OnReport (as callback) for next received message from HidDevice
+                // *Do stuff with data received from HidDevice*
+
+                // Here is an example for debugging
+                if (report.Data.Length >= 4) // Check if length of received data is greater than or equal to 4 elements (change as needed)
+                {
+                    int[] data = Array.ConvertAll(report.Data, c => (int)c); // Convert received byte data to integer array
+                    string[] convertedData = new string[data.Length]; // Initialize string array
+                    for (int i = 0; i < data.Length; i++) // Loop through each data element
+                        convertedData[i] = Convert.ToChar(data[i]).ToString(); // Convert current data element to equivalent string element
+                    Console.WriteLine(string.Join("", convertedData)); // Output info to event log (debug)
+                }
+
+                kbDevice.ReadReport(OnReport); // Subscribe to OnReport (as callback) for next received message from HidDevice
+            }
+            catch (Exception ex) // Handle exceptions encountered in above code
+            {
+                Console.WriteLine("Error receiving data from " + this.DeviceName + ". " + ex.Message); // Output info to event log
+            }
         }
 
         #endregion
@@ -308,10 +312,18 @@ namespace Ex.HidInterface
         private static int ConvertHexStringToInt(string hexString)
         {
             int intValue;
-            if (hexString.StartsWith("0x") == true) // Handle case where hex string is prefixed with "0x" (e.g., 0x61)
-                intValue = Convert.ToInt32(hexString, 16);
-            else
-                intValue = int.Parse(hexString, System.Globalization.NumberStyles.HexNumber);
+            try // Attempt the following code...
+            {
+                if (hexString.StartsWith("0x") == true) // Handle case where hex string is prefixed with "0x" (e.g., 0x61)
+                    intValue = Convert.ToInt32(hexString, 16);
+                else
+                    intValue = int.Parse(hexString, System.Globalization.NumberStyles.HexNumber);
+            }
+            catch (Exception ex) // Handle exceptions encountered in above code
+            {
+                Console.WriteLine("Error converting hex string '" + hexString + "' to integer. " + ex.Message); // Output info to event log
+                intValue = -1;
+            }
             return intValue;
         }
 
