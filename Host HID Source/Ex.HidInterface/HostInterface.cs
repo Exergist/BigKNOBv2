@@ -116,7 +116,6 @@ namespace Ex.HidInterface
                 }
                 if (kbDevice != null) // Check if target HidDevice was found
                 {
-                    Console.WriteLine(this.DeviceName + " found!"); // Output info to event log (debug)
                     kbDevice.OpenDevice(); // Open connection between HostInterface (computer) and HidDevice
                     this.IsActive = true; // Set flag indicating interface between HostInterface (computer) and HidDevice is active
                     this.IsListening = hidDeviceListeningEnabled; // Transfer passed-in listening state (and activate listening for HidDevice data messages if applicable)
@@ -160,8 +159,6 @@ namespace Ex.HidInterface
             {
                 Console.WriteLine("Error checking connection with " + this.DeviceName + ". " + ex.Message); // Output info to event log
             }
-            // if (result == true) // Check if result is true (debug)
-                // Console.WriteLine(this.DeviceName + " is connected"); // Output info to event log (debug)
             return result;
         }
 
@@ -185,7 +182,6 @@ namespace Ex.HidInterface
                     OutData[2] = (byte)context; // Context for desired HidAction
 
                 // Send OutData to HidDevice
-                Console.WriteLine("Sending data to " + this.DeviceName); // Output info to event log (debug)
                 if (kbDevice.Write(OutData) == false) // Send OutData to HidDevice and check if process was NOT successful
                     Console.WriteLine("Could not send data to " + this.DeviceName); // Output info to event log
                 else
@@ -213,6 +209,8 @@ namespace Ex.HidInterface
                     Console.WriteLine("Could not read data from " + this.DeviceName); // Output info to event log
                 else
                 {
+                    ///Console.WriteLine("Data received from " + this.DeviceName); // Output info to event log (debug)
+                    
                     // *Do stuff with data received from HidDevice*
 
                     // Here is an example for debugging
@@ -281,6 +279,7 @@ namespace Ex.HidInterface
         {
             try // Attempt the following code...
             {
+                ///Console.WriteLine("Data received from " + this.DeviceName); // Output info to event log (debug)
                 if (this.IsConnected == false || this.IsListening == false) // Check if HostInterface (computer) is NOT connected to HidDevice OR is NOT listening for HidDevice messages 
                     return; // Return from this method
 
