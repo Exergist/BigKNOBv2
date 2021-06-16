@@ -61,22 +61,22 @@ void ChangeLedColor(void);
 void ToggleRgbLED(void);
 void ErrorFlash(void);
 void LightFlash(void);
-void SendHID(void);
+///void SendHID(void);
 
 //}
 
-//{ CUSTOM KEYCODE DECLARATION
+/* //{ CUSTOM KEYCODE DECLARATION
 
 enum custom_keycodes
 {
-	KC_SendHID = SAFE_RANGE
-	/* CTRLF13 = SAFE_RANGE,
+	CTRLF13 = SAFE_RANGE,
 	CTRLF14,
 	CTRLF15,
-	CTRLF16 */
+	CTRLF16,
+	KC_SendHID
 };
 
-//}
+//} */
 
 //{ LAYERS
 
@@ -234,8 +234,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] =
 	[_PRIMARY] = LAYOUT // Layer 0
 	(
 		// ENCODER_DANCE, F13, F14, F15, F16
-		///TD(ENCODER_DANCE), KC_F13, KC_F14, KC_F15, KC_F16
-		TD(ENCODER_DANCE), KC_F13, KC_F14, KC_F15, KC_SendHID
+		TD(ENCODER_DANCE), KC_F13, KC_F14, KC_F15, KC_F16
 	),
 	[_SECONDARY] = LAYOUT // Layer 1
 	(
@@ -285,14 +284,14 @@ void encoder_update_user(uint8_t index, bool clockwise)
 
 //}
 
-//{ CUSTOM KEYCODE PROCESSING
+/* //{ CUSTOM KEYCODE PROCESSING
 
 // Define behavior for custom keycodes
 bool process_record_user(uint16_t keycode, keyrecord_t *record)
 {
 	switch (keycode) // Switch statement for handling triggering keycodes
 	{
-		/* case CTRLF13: // Triggering keycode is the (custom) CTRLF13
+		case CTRLF13: // Triggering keycode is the (custom) CTRLF13
 			if (record->event.pressed)  // Check if the triggering action was a physical key "press" (down)
 				tap_code16(LCTL(KC_F13)); // Send command to "tap" (down and up events) the Left Control and F13 keys
 			return false; // Return from this method without "normal" handling of keycode
@@ -307,7 +306,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 		case CTRLF16:
 			if (record->event.pressed)
 				tap_code16(LCTL(KC_F16)); // Send command to "tap" (down and up events) the Left Control and F16 keys
-			return false; */
+			return false;
 		case KC_SendHID:
 			if (record->event.pressed)
 				SendHID(); // Call command to send Raw HID data to host computer
@@ -316,7 +315,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 	return true; // Effectively process ALL other keycodes "normally"
 };
 
-//}
+//} */
 
 //{ RAW HID
 
@@ -326,7 +325,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 // Vendor ID	= 	0xCEEB
 // Product ID 	= 	0x0007
 // Usage Page 	= 	0xFF60
-// Usage (ID) 	= 	0x61
+// Usage (ID) 	= 	0x0061
 
 //}
 
@@ -349,19 +348,17 @@ void raw_hid_receive(uint8_t *data, uint8_t length)
 			break;
 	}
 	
-	SendHID(); // Call method to send data to host computer
+	///SendHID(); // Call method to send data to host computer
 }
 
-// Method for sending data to host computer via a HID interface
+/* // Method for sending data to host computer via a HID interface
 void SendHID(void)
 {
 	uint8_t data[RAW_EPSIZE]; // Declare array for storing data for sending to host computer
     memset(data, 0, RAW_EPSIZE);
-	data[0] = 'B';
-	
+	data[0] = 'B'; // Populate data array to send to host computer
 	raw_hid_send(data, RAW_EPSIZE); // Call method to send data to host computer
-	LightFlash(); // debug
-}
+} */
 
 //}
 
