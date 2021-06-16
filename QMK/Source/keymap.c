@@ -17,9 +17,9 @@
 //   • Next layer via encoder single-tap
 //   • Previous layer via encoder press-hold
 //   • RGB LEDs toggle on/off via encoder double-tap
-//   • Raw HID bicommunication with C# application on host computer
 //   • RGB LED 'ErrorFlash' to indicate issues
 //   • RGB LED 'LightFlash' for general indication and debugging
+//   • Raw HID bicommunication with C# application on host computer
 //   • Harmonized function key mapping
 //   • Restructured layout and code organization
 //   • Expanded new line and tab formatting
